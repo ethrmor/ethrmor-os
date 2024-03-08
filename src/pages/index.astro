@@ -1,50 +1,174 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../components/FormattedDate.astro';
+import Project from '../components/Project.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/pages/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<BaseLayout title="Home" description="Welcome to the Ethrdome.">
+  <h1>Ethan Morris</h1>
+  <p>Hi, I'm Ethan, and I'd like to welcome you to my little corner of the internet.</p>
+  <p>
+    I'm a developer and I love building (and occassionally breaking) things. Currently, I live in Illinois and work at <a
+      href="https://centralstatesmarketing.com">Central States Marketing</a
+    > as a web developer.
+  </p>
+
+  <h2>Featured Projects</h2>
+  <div class="gallery">
+    <ul class="wrapper">
+      <li>
+        <Project
+          title="Fantasy Football League Website"
+          image="/chug-league.jpg"
+          link="https://chug-official.vercel.app"
+          height="1080"
+          width="1920"
+          alt="Image"
+        />
+      </li>
+      <li>
+        <h3>Fantasy Football League Website</h3>
+        <a href="https://chug-official.vercel.app"
+          ><Image src="/chug-league.jpg" height="1080" width="1920" alt="Image" /></a
+        ><div class="links">
+          <a href="https://chug-official.vercel.app">Live Site</a><a href="https://github.com/ethrmor/chug-official"
+            >View Code</a
+          >
+        </div>
+      </li>
+      <li>
+        <h3>Fantasy Football League Website</h3>
+        <a href="https://chug-official.vercel.app"
+          ><Image src="/chug-league.jpg" height="1080" width="1920" alt="Image" /></a
+        ><div class="links">
+          <a href="https://chug-official.vercel.app">Live Site</a><a href="https://github.com/ethrmor/chug-official"
+            >View Code</a
+          >
+        </div>
+      </li>
+      <li>
+        <h3>Fantasy Football League Website</h3>
+        <a href="https://chug-official.vercel.app"
+          ><Image src="/chug-league.jpg" height="1080" width="1920" alt="Image" /></a
+        ><div class="links">
+          <a href="https://chug-official.vercel.app">Live Site</a><a href="https://github.com/ethrmor/chug-official"
+            >View Code</a
+          >
+        </div>
+      </li>
+      <li>
+        <h3>Fantasy Football League Website</h3>
+        <a href="https://chug-official.vercel.app"
+          ><Image src="/chug-league.jpg" height="1080" width="1920" alt="Image" /></a
+        ><div class="links">
+          <a href="https://chug-official.vercel.app">Live Site</a><a href="https://github.com/ethrmor/chug-official"
+            >View Code</a
+          >
+        </div>
+      </li>
+      <li>
+        <h3>Fantasy Football League Website</h3>
+        <a href="https://chug-official.vercel.app"
+          ><Image src="/chug-league.jpg" height="1080" width="1920" alt="Image" /></a
+        ><div class="links">
+          <a href="https://chug-official.vercel.app">Live Site</a><a href="https://github.com/ethrmor/chug-official"
+            >View Code</a
+          >
+        </div>
+      </li>
+      <li>
+        <h3>Fantasy Football League Website</h3>
+        <a href="https://chug-official.vercel.app"
+          ><Image src="/chug-league.jpg" height="1080" width="1920" alt="Image" /></a
+        ><div class="links">
+          <a href="https://chug-official.vercel.app">Live Site</a><a href="https://github.com/ethrmor/chug-official"
+            >View Code</a
+          >
+        </div>
+      </li>
+    </ul>
+  </div>
+  <h2>Latest Posts</h2>
+
+  <ul class="posts">
+    {
+      posts.map((post) => (
+        <li>
+          <a href={`/blog/${post.slug}/`}>
+            <FormattedDate date={post.data.pubDate} />
+            <h3>{post.data.title}</h3>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <style>
+    h1 {
+      margin-block-start: 3rem;
+    }
+    h2 {
+      margin-block-start: 1rem;
+    }
+
+    .feature {
+      margin: 0;
+      border: 2px solid var(--accent);
+      border-radius: 1rem;
+      background-color: color-mix(in oklch, var(--accent) 20%, transparent 80%);
+      padding: 1rem;
+      list-style: none;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: inherit;
+      grid-column: full;
+      padding-block: 1rem;
+      overflow-x: scroll;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x proximity;
+      scrollbar-width: none;
+    }
+
+    .gallery::-webkit-scrollbar {
+      display: none;
+      inline-size: 0 !important;
+    }
+
+    .gallery .wrapper {
+      display: flex;
+      grid-column: content;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .gallery .wrapper > li {
+      display: flex;
+      flex: 1 0 90%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+      width: min(100%, 60ch);
+    }
+
+    .gallery .wrapper > li:not(:last-child) {
+      margin-inline-end: 1rem;
+    }
+
+    .gallery .wrapper::after {
+      align-self: stretch;
+      padding-inline-end: max(var(--grid-gap), (100vw - var(--grid-content)) / 2 - var(--grid-gap));
+      content: '';
+    }
+    .posts {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+  </style>
+</BaseLayout>

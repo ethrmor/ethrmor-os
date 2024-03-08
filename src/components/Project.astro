@@ -1,0 +1,26 @@
+---
+import { Image } from 'astro:assets';
+
+const { title, image, link, height, width, alt } = Astro.props;
+---
+
+<h3>{title}</h3>
+<a href={link}><Image src={image} height={height} width={width} alt={alt} /></a>
+<div class="links">
+  <a href="https://chug-official.vercel.app">Live Site</a><a href="https://github.com/ethrmor/chug-official"
+    >View Code</a
+  >
+</div>
+
+<style>
+  h3 {
+    font-size: var(--fs-md);
+  }
+  img {
+    aspect-ratio: 16/9;
+  }
+  .links {
+    display: flex;
+    gap: 0.75em;
+  }
+</style>
