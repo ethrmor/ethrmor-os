@@ -1,13 +1,13 @@
 ---
 import { Image } from 'astro:assets';
 
-const { title, image, link, height, width, alt } = Astro.props;
+const { title, image, code_link, live_link, link, height, width, alt } = Astro.props;
 ---
 
 <h3>{title}</h3>
 <a href={link}><Image src={image} height={height} width={width} alt={alt} /></a>
 <div class="links">
-  <a href="https://chug-official.vercel.app">Live Site</a><a href="https://github.com/ethrmor/chug-official"
+  <a href={live_link}>Live Site</a><a href={code_link}
     >View Code</a
   >
 </div>

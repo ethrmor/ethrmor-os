@@ -1,9 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
-import FormattedDate from '../components/FormattedDate.astro';
-import Project from '../components/Project.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import FormattedDate from '@components/FormattedDate.astro';
+import Project from '@components/Project.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
 
+import chug_league from '@assets/chug-league.jpg'
 const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
 ---
 
@@ -22,7 +23,19 @@ const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueO
       <li>
         <Project
           title="Fantasy Football League Website"
-          image="/chug-league.jpg"
+          image={chug_league}
+          link="https://chug-official.vercel.app"
+          code_link="https://github.com/ethrmor/chug-official/"
+          live_link="https://chug-official.vercel.app"
+          height="1080"
+          width="1920"
+          alt="Image"
+        />
+      </li>
+      <li>
+        <Project
+          title="Fantasy Football League Website"
+          image={chug_league}
           link="https://chug-official.vercel.app"
           height="1080"
           width="1920"
@@ -32,7 +45,7 @@ const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueO
       <li>
         <Project
           title="Fantasy Football League Website"
-          image="/chug-league.jpg"
+          image={chug_league}
           link="https://chug-official.vercel.app"
           height="1080"
           width="1920"
@@ -42,17 +55,7 @@ const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueO
       <li>
         <Project
           title="Fantasy Football League Website"
-          image="/chug-league.jpg"
-          link="https://chug-official.vercel.app"
-          height="1080"
-          width="1920"
-          alt="Image"
-        />
-      </li>
-      <li>
-        <Project
-          title="Fantasy Football League Website"
-          image="/chug-league.jpg"
+          image={chug_league}
           link="https://chug-official.vercel.app"
           height="1080"
           width="1920"
