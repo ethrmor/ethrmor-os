@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
 import Project from '../components/Project.astro';
@@ -31,64 +30,34 @@ const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueO
         />
       </li>
       <li>
-        <h3>Fantasy Football League Website</h3>
-        <a href="https://chug-official.vercel.app"
-          ><Image src="/chug-league.jpg" height="1080" width="1920" alt="Image" /></a
-        ><div class="links">
-          <a href="https://chug-official.vercel.app">Live Site</a><a href="https://github.com/ethrmor/chug-official"
-            >View Code</a
-          >
-        </div>
+        <Project
+          title="Fantasy Football League Website"
+          image="/chug-league.jpg"
+          link="https://chug-official.vercel.app"
+          height="1080"
+          width="1920"
+          alt="Image"
+        />
       </li>
       <li>
-        <h3>Fantasy Football League Website</h3>
-        <a href="https://chug-official.vercel.app"
-          ><Image src="/chug-league.jpg" height="1080" width="1920" alt="Image" /></a
-        ><div class="links">
-          <a href="https://chug-official.vercel.app">Live Site</a><a href="https://github.com/ethrmor/chug-official"
-            >View Code</a
-          >
-        </div>
+        <Project
+          title="Fantasy Football League Website"
+          image="/chug-league.jpg"
+          link="https://chug-official.vercel.app"
+          height="1080"
+          width="1920"
+          alt="Image"
+        />
       </li>
       <li>
-        <h3>Fantasy Football League Website</h3>
-        <a href="https://chug-official.vercel.app"
-          ><Image src="/chug-league.jpg" height="1080" width="1920" alt="Image" /></a
-        ><div class="links">
-          <a href="https://chug-official.vercel.app">Live Site</a><a href="https://github.com/ethrmor/chug-official"
-            >View Code</a
-          >
-        </div>
-      </li>
-      <li>
-        <h3>Fantasy Football League Website</h3>
-        <a href="https://chug-official.vercel.app"
-          ><Image src="/chug-league.jpg" height="1080" width="1920" alt="Image" /></a
-        ><div class="links">
-          <a href="https://chug-official.vercel.app">Live Site</a><a href="https://github.com/ethrmor/chug-official"
-            >View Code</a
-          >
-        </div>
-      </li>
-      <li>
-        <h3>Fantasy Football League Website</h3>
-        <a href="https://chug-official.vercel.app"
-          ><Image src="/chug-league.jpg" height="1080" width="1920" alt="Image" /></a
-        ><div class="links">
-          <a href="https://chug-official.vercel.app">Live Site</a><a href="https://github.com/ethrmor/chug-official"
-            >View Code</a
-          >
-        </div>
-      </li>
-      <li>
-        <h3>Fantasy Football League Website</h3>
-        <a href="https://chug-official.vercel.app"
-          ><Image src="/chug-league.jpg" height="1080" width="1920" alt="Image" /></a
-        ><div class="links">
-          <a href="https://chug-official.vercel.app">Live Site</a><a href="https://github.com/ethrmor/chug-official"
-            >View Code</a
-          >
-        </div>
+        <Project
+          title="Fantasy Football League Website"
+          image="/chug-league.jpg"
+          link="https://chug-official.vercel.app"
+          height="1080"
+          width="1920"
+          alt="Image"
+        />
       </li>
     </ul>
   </div>
