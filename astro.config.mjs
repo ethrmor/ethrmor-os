@@ -11,6 +11,5 @@ export default defineConfig({
     service: passthroughImageService()
   },
   integrations: [mdx(), sitemap()],
-  output: "server",
-  adapter: cloudflare()
+  output: "static",
 });
