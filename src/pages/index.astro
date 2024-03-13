@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import FormattedDate from '@components/FormattedDate.astro';
 import Project from '@components/Project.astro';
 import BaseLayout from '@layouts/BaseLayout.astro';
+import Tag from '@components/Tag.astro';
 
 import chug_league from '@images/chug-league.jpg'
 const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
@@ -74,6 +75,7 @@ const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueO
           <a href={`/blog/${post.slug}/`}>
             <FormattedDate date={post.data.pubDate} />
             <h3>{post.data.title}</h3>
+            <Tag />
           </a>
         </li>
       ))
@@ -85,7 +87,12 @@ const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueO
       margin-block-start: 3rem;
     }
     h2 {
-      margin-block-start: 1rem;
+      margin-block-start: 2rem;
+      font-size: var(--fs-lg);
+    }
+    h3 {
+      margin-block-start: .5rem;
+      font-size: var(--fs-md);
     }
 
     .feature {
@@ -100,7 +107,7 @@ const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueO
       display: grid;
       grid-template-columns: inherit;
       grid-column: full;
-      padding-block: 1rem;
+      margin-block-end: 1rem;
       overflow-x: scroll;
       overscroll-behavior-x: contain;
       scroll-snap-type: x proximity;
@@ -142,6 +149,15 @@ const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueO
       margin: 0;
       padding: 0;
       list-style: none;
+    }
+    .posts li {
+      margin-block-end: 1rem;
+    }
+    .posts h3 {
+      margin: 0;
+    }
+    .posts a {
+      text-decoration: none;
     }
   </style>
 </BaseLayout>
