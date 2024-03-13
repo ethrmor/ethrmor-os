@@ -4,7 +4,7 @@ import FormattedDate from '@components/FormattedDate.astro';
 import Project from '@components/Project.astro';
 import BaseLayout from '@layouts/BaseLayout.astro';
 
-import chug_league from '@assets/chug-league.jpg'
+import chug_league from '@images/chug-league.jpg'
 const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
 ---
 
