@@ -6,7 +6,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Tag from '@components/Tag.astro';
 
 import chug_league from '@images/chug-league.jpg'
-const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
+const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0,3);
 ---
 
 <BaseLayout title="Home" description="Welcome to the Ethrdome.">
@@ -75,12 +75,13 @@ const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueO
           <a href={`/blog/${post.slug}/`}>
             <FormattedDate date={post.data.pubDate} />
             <h3>{post.data.title}</h3>
-            <Tag />
           </a>
         </li>
       ))
     }
   </ul>
+
+  <a href="/blog">View all posts</a>
 
   <style>
     h1 {
@@ -94,7 +95,6 @@ const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueO
       margin-block-start: .5rem;
       font-size: var(--fs-md);
     }
-
     .feature {
       margin: 0;
       border: 2px solid var(--accent);
@@ -158,6 +158,10 @@ const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueO
     }
     .posts a {
       text-decoration: none;
+    }
+    .posts a:hover h3 {
+      color: var(--accent);
+      text-decoration: underline;
     }
   </style>
 </BaseLayout>
