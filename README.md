@@ -1,2 +1,5 @@
-# Wecome to &#60;ethrmor&#62; – My Online OS
+# ethrmor.com
 
+Built with Astro.
+
+Copyright © 2024 ethrmor.com

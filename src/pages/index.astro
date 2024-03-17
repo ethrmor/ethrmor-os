@@ -1,167 +1,227 @@
 ---
-import { getCollection } from 'astro:content';
 import FormattedDate from '@components/FormattedDate.astro';
 import Project from '@components/Project.astro';
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Tag from '@components/Tag.astro';
+import { getCollection } from 'astro:content';
 
-import chug_league from '@images/chug-league.jpg'
-const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0,3);
+import chug_league from '@images/chug-league.jpg';
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 4);
 ---
 
-<BaseLayout title="Home" description="Welcome to the Ethrdome.">
-  <h1>Ethan Morris</h1>
-  <p>Hi, I'm Ethan, and I'd like to welcome you to my little corner of the internet.</p>
-  <p>
-    I'm a developer and I love building (and occassionally breaking) things. Currently, I live in Illinois and work at <a
-      href="https://centralstatesmarketing.com">Central States Marketing</a
-    > as a web developer.
-  </p>
+<BaseLayout title='Home' description='Welcome to the Ethrdome.'>
+	<h1>Ethan Morris</h1>
+	<p class='byline'>
+		<strong>Developer</strong> at <a href='https://centralstatesmarketing.com'>Central States Marketing</a>
+	</p>
+	<p>
+		I'm a developer and I love building (and occassionally breaking) things. Currently, I live in Illinois and work at <a
+			href='https://centralstatesmarketing.com'>Central States Marketing</a
+		> as a web developer.
+	</p>
 
-  <h2>Featured Projects</h2>
-  <div class="gallery">
-    <ul class="wrapper">
-      <li>
-        <Project
-          title="Fantasy Football League Website"
-          image={chug_league}
-          link="https://chug-official.vercel.app"
-          code_link="https://github.com/ethrmor/chug-official/"
-          live_link="https://chug-official.vercel.app"
-          height="1080"
-          width="1920"
-          alt="Image"
-          loading="eager"
-        />
-      </li>
-      <li>
-        <Project
-          title="Fantasy Football League Website"
-          image={chug_league}
-          link="https://chug-official.vercel.app"
-          height="1080"
-          width="1920"
-          alt="Image"
-        />
-      </li>
-      <li>
-        <Project
-          title="Fantasy Football League Website"
-          image={chug_league}
-          link="https://chug-official.vercel.app"
-          height="1080"
-          width="1920"
-          alt="Image"
-        />
-      </li>
-      <li>
-        <Project
-          title="Fantasy Football League Website"
-          image={chug_league}
-          link="https://chug-official.vercel.app"
-          height="1080"
-          width="1920"
-          alt="Image"
-        />
-      </li>
-    </ul>
-  </div>
-  <h2>Latest Posts</h2>
+	<h2>Featured Projects</h2>
+	<div class='gallery'>
+		<ul class='wrapper'>
+			<li>
+				<Project
+					title='Fantasy Football League Website'
+					image={chug_league}
+					link='https://chug-official.vercel.app'
+					code_link='https://github.com/ethrmor/chug-official/'
+					live_link='https://chug-official.vercel.app'
+					height='1080'
+					width='1920'
+					alt='Image'
+					loading='eager'
+				/>
+			</li>
+			<li>
+				<Project
+					title='Fantasy Football League Website'
+					image={chug_league}
+					link='https://chug-official.vercel.app'
+					height='1080'
+					width='1920'
+					alt='Image'
+				/>
+			</li>
+			<li>
+				<Project
+					title='Fantasy Football League Website'
+					image={chug_league}
+					link='https://chug-official.vercel.app'
+					height='1080'
+					width='1920'
+					alt='Image'
+				/>
+			</li>
+			<li>
+				<Project
+					title='Fantasy Football League Website'
+					image={chug_league}
+					link='https://chug-official.vercel.app'
+					height='1080'
+					width='1920'
+					alt='Image'
+				/>
+			</li>
+		</ul>
+	</div>
+	<h2>Latest Posts</h2>
 
-  <ul class="posts">
-    {
-      posts.map((post) => (
-        <li>
-          <a href={`/blog/${post.slug}/`}>
-            <FormattedDate date={post.data.pubDate} />
-            <h3>{post.data.title}</h3>
-          </a>
-        </li>
-      ))
-    }
-  </ul>
+	<ul class='posts'>
+		{
+			posts.map((post) => (
+				<li class='post-link'>
+					<a href={`/blog/${post.slug}/`}>
+						<FormattedDate date={post.data.pubDate} />
+						<h3>{post.data.title}</h3>
+					</a>
+				</li>
+			))
+		}
+	</ul>
 
-  <a href="/blog">View all posts</a>
+	<a href='/blog'>View all posts</a>
 
-  <style>
-    h1 {
-      margin-block-start: 3rem;
-    }
-    h2 {
-      margin-block-start: 2rem;
-      font-size: var(--fs-lg);
-    }
-    h3 {
-      margin-block-start: .5rem;
-      font-size: var(--fs-md);
-    }
-    .feature {
-      margin: 0;
-      border: 2px solid var(--accent);
-      border-radius: 1rem;
-      background-color: color-mix(in oklch, var(--accent) 20%, transparent 80%);
-      padding: 1rem;
-      list-style: none;
-    }
-    .gallery {
-      display: grid;
-      grid-template-columns: inherit;
-      grid-column: full;
-      margin-block-end: 1rem;
-      overflow-x: scroll;
-      overscroll-behavior-x: contain;
-      scroll-snap-type: x proximity;
-      scrollbar-width: none;
-    }
+	<h2>About Me</h2>
+	<p>
+		I've been building websites since I was 12, and I've been working professionally for the last 5 years. I've worked
+		with a variety of technologies, but I'm most comfortable with the MERN stack.
+	</p>
 
-    .gallery::-webkit-scrollbar {
-      display: none;
-      inline-size: 0 !important;
-    }
+	<p>
+		I'm currently working on a few projects, including a new version of this website, a new version of my personal blog,
+		and a few other things. I'm also working on a few open source projects, including a few for the <a
+			href='https://github.com/ethrmor'>Chug League</a
+		>.
+	</p>
+	<a href='/about'>More about me</a>
 
-    .gallery .wrapper {
-      display: flex;
-      grid-column: content;
-      align-items: center;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .gallery .wrapper > li {
-      display: flex;
-      flex: 1 0 90%;
-      flex-direction: column;
-      justify-content: center;
-      align-items: start;
-      width: min(100%, 60ch);
-    }
+	<h2>Work</h2>
+	<p>Here are some of the places I've worked.</p>
+	<ul>
+		<li>Central States Marketing</li>
+		<li>Freelance</li>
+	</ul>
+	<a href='/resume' download>Download resume</a>
 
-    .gallery .wrapper > li:not(:last-child) {
-      margin-inline-end: 1rem;
-    }
+	<h2>Uses</h2>
+	<p>Here are some of the tools and technologies I use on a daily basis.</p>
+	<ul>
+		<li>VSCode</li>
+		<li>Node.js</li>
+		<li>React</li>
+		<li>Next.js</li>
+		<li>Express</li>
+		<li>MongoDB</li>
+		<li>PostgreSQL</li>
+		<li>Git</li>
+	</ul>
+	<a href='/uses'>My uses</a>
 
-    .gallery .wrapper::after {
-      align-self: stretch;
-      padding-inline-end: max(var(--grid-gap), (100vw - var(--grid-content)) / 2 - var(--grid-gap));
-      content: '';
-    }
-    .posts {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .posts li {
-      margin-block-end: 1rem;
-    }
-    .posts h3 {
-      margin: 0;
-    }
-    .posts a {
-      text-decoration: none;
-    }
-    .posts a:hover h3 {
-      color: var(--accent);
-      text-decoration: underline;
-    }
-  </style>
+	<h2>Reach Me</h2>
+	<p>Feel free to reach out to me on any of the following platforms.</p>
+	<ul>
+		<li>Email: <a href='mailto:ethrmor@gmail.com'>ethrmor[at]gmail[dot]com</a></li>
+		<li>GitHub: <a href='https://github.com/ethrmor'>ethrmor</a></li>
+		<li>LinkedIn: <a href='https://www.linkedin.com/in/ethanmorris/'>ethrmor</a></li>
+		<li>Twitter: <a href='https://twitter.com/ethrmor'>ethrmor</a></li>
+	</ul>
+
+	<style>
+		h1 {
+			margin-block-start: 3rem;
+		}
+		h2 {
+			margin-block-start: 2rem;
+			font-size: var(--fs-lg);
+		}
+		h3 {
+			margin-block-start: 0.5rem;
+			font-size: var(--fs-md);
+		}
+		.byline {
+			font-size: var(--fs-md);
+		}
+		.feature {
+			margin: 0;
+			border: 2px solid var(--accent);
+			border-radius: 1rem;
+			background-color: color-mix(in oklch, var(--accent) 20%, transparent 80%);
+			padding: 1rem;
+			list-style: none;
+		}
+		.gallery {
+			display: grid;
+			grid-template-columns: inherit;
+			grid-column: full;
+			margin-block-end: 1rem;
+			overflow-x: scroll;
+			overscroll-behavior-x: contain;
+			scroll-snap-type: x proximity;
+			scrollbar-width: none;
+		}
+
+		.gallery::-webkit-scrollbar {
+			display: none;
+			inline-size: 0 !important;
+		}
+
+		.gallery .wrapper {
+			display: flex;
+			grid-column: content;
+			align-items: center;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.gallery .wrapper > li {
+			display: flex;
+			flex: 1 0 90%;
+
+			justify-content: center;
+			align-items: start;
+			width: min(100%, 60ch);
+		}
+
+		.gallery .wrapper > li:not(:last-child) {
+			margin-inline-end: 1rem;
+		}
+
+		.gallery .wrapper::after {
+			align-self: stretch;
+			padding-inline-end: max(var(--grid-gap), (100vw - var(--grid-content)) / 2 - var(--grid-gap));
+			content: '';
+		}
+		.posts {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.post-link {
+			margin-block-end: 1rem;
+			border-radius: 0.5em;
+		}
+		.post-link a {
+			display: block;
+			box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 8px 0px;
+			border-radius: 0.5em;
+			background-color: color-mix(in oklch, var(--accent) 5%, transparent 95%);
+			padding: 1em;
+			color: var(--black);
+			text-decoration: none;
+		}
+		.post-link a:hover {
+			box-shadow: rgba(0, 0, 0, 0.2) 0 3px 12px 0;
+		}
+		.post-link h3 {
+			margin: 0;
+		}
+		.post-link a:hover h3 {
+			color: var(--accent);
+		}
+	</style>
 </BaseLayout>

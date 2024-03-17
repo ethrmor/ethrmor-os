@@ -1,6 +1,6 @@
 :root {
-  --accent: oklch(46% 0.10 162);
-  --accent-dark: oklch(38% 0.10 162);
+  --accent: oklch(46% 0.1 162);
+  --accent-dark: oklch(38% 0.1 162);
   --black: oklch(25% 0 0);
   --gray: 96, 115, 159;
   --gray-light: 229, 233, 240;
@@ -24,6 +24,10 @@
   --grid-feature: minmax(0, 3rem);
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   background: linear-gradient(var(--gray-gradient)) no-repeat;
@@ -36,6 +40,7 @@ body {
     sans-serif;
   text-align: left;
   word-wrap: break-word;
+  scroll-behavior: smooth;
   color: var(--black);
   font-size: var(--fs-base);
   line-height: 1.7;
@@ -80,18 +85,21 @@ b {
 
 a {
   color: inherit;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 0.25em;
 }
 
 a:hover {
-  color: var(--accent);
+  text-decoration-thickness: 0.25em;
 }
 
-p {
+p,
+a {
   margin: 0 0 1em 0;
 }
 
-.prose p {
-  margin-bottom: 2em;
+p + ul {
+  margin-top: 0em;
 }
 
 textarea {
@@ -124,7 +132,7 @@ pre {
   padding: 1.5em;
 }
 
-pre>code {
+pre > code {
   all: unset;
 }
 
@@ -143,18 +151,14 @@ hr {
 .layout-grid {
   display: grid;
   grid-template-columns:
-    [full-start] var(--grid-full)
-    [bleed-start] var(--grid-bleed)
-    [feature-start] var(--grid-feature)
-    [popout-start] var(--grid-popout)
-    [content-start] var(--grid-content) [content-end]
-    var(--grid-popout) [popout-end]
-    var(--grid-feature) [feature-end]
-    var(--grid-bleed) [bleed-end]
-    var(--grid-full) [full-end];
+    [full-start] var(--grid-full) [bleed-start] var(--grid-bleed) [feature-start] var(--grid-feature)
+    [popout-start] var(--grid-popout) [content-start] var(--grid-content) [content-end] var(--grid-popout) [popout-end] var(
+      --grid-feature
+    )
+    [feature-end] var(--grid-bleed) [bleed-end] var(--grid-full) [full-end];
 }
 
-:is(.layout-grid, .full)>* {
+:is(.layout-grid, .full) > * {
   grid-column: content;
 }
 
