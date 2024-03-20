@@ -116,7 +116,7 @@ table {
 }
 
 img {
-  border-radius: 8px;
+  /* border-radius: 8px; */
   max-width: 100%;
   height: auto;
 }
