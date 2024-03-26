@@ -1,10 +1,11 @@
 :root {
   --accent: oklch(46% 0.1 162);
   --accent-dark: oklch(38% 0.1 162);
-  --black: oklch(25% 0 0);
-  --gray: 96, 115, 159;
-  --gray-light: 229, 233, 240;
-  --gray-dark: rgb(34, 41, 57);
+  --white: oklch(100% 0 0);
+  --gray-25: oklch(75% 0 126);
+  --gray-50: oklch(50% 0 162);
+  --gray-75: oklch(25% 0 162);
+  --black: oklch(10% 0 0);
   --gray-gradient: rgba(var(--gray-light), 50%), #fff;
   --box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%), 0 16px 32px rgba(var(--gray), 33%);
 
@@ -16,7 +17,7 @@
   --fs-xxl: clamp(2.289rem, 0.47vw + 2.171rem, 2.594rem);
   --fs-xxxl: clamp(2.861rem, 0.587vw + 2.714rem, 3.242rem);
 
-  --grid-gap: clamp(1rem, 6vw, 3rem);
+  --grid-gap: clamp(1.2rem, 6vw, 3rem);
   --grid-full: minmax(var(--grid-gap), 1fr);
   --grid-bleed: minmax(0, 5rem);
   --grid-content: min(70ch, 100% - var(--grid-gap) * 2);
@@ -34,7 +35,7 @@ body {
   background-size: 100% 600px;
   padding: 0;
   font-family:
-    'Metropolis',
+    'Manrope Variable',
     -apple-system,
     'Segoe UI',
     sans-serif;
