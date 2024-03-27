@@ -1,11 +1,11 @@
 :root {
-  --accent: oklch(46% 0.1 162);
-  --accent-dark: oklch(38% 0.1 162);
-  --white: oklch(100% 0 0);
-  --gray-25: oklch(75% 0 126);
-  --gray-50: oklch(50% 0 162);
-  --gray-75: oklch(25% 0 162);
-  --black: oklch(10% 0 0);
+  --accent: 46% 0.1 162;
+  --accent-dark: 38% 0.1 162;
+  --white: 100% 0 0;
+  --gray-25: 75% 0 126;
+  --gray-50: 50% 0 162;
+  --gray-75: 25% 0 162;
+  --black: 10% 0 0;
   --gray-gradient: rgba(var(--gray-light), 50%), #fff;
   --box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%), 0 16px 32px rgba(var(--gray), 33%);
 
@@ -59,7 +59,7 @@ h4,
 h5,
 h6 {
   margin: 0 0 0.5rem 0;
-  color: var(--black);
+  color: oklch(var(--black));
   line-height: 1.2;
 }
 
@@ -86,7 +86,7 @@ b {
 
 a {
   color: inherit;
-  text-decoration-color: var(--accent);
+  text-decoration-color: oklch(var(--accent));
   text-underline-offset: 0.25em;
 }
 
@@ -139,14 +139,14 @@ pre > code {
 
 blockquote {
   margin: 0px;
-  border-left: 4px solid var(--accent);
+  border-left: 4px solid oklch(var(--accent));
   padding: 0 0 0 20px;
   font-size: 1.333em;
 }
 
 hr {
   border: none;
-  border-top: 1px solid rgb(var(--gray-light));
+  border-top: 1px solid oklch(var(--gray-25));
 }
 
 .layout-grid {
