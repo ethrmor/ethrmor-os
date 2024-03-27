@@ -64,7 +64,7 @@ import HeaderLink from './HeaderLink.astro';
 		min-height: 3rem;
 	}
 	.is_scrolled {
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+		box-shadow: 0 2px 8px oklch(var(--black) / 5%);
 	}
 	h2 {
 		margin: 0;
@@ -86,27 +86,27 @@ import HeaderLink from './HeaderLink.astro';
 	.links a {
 		margin-block: 0.5rem;
 		border-radius: 0.5rem;
-		padding-block: 0.25rem;
-		color: var(--black);
+		padding: 0.25rem 0.5rem;
+		color: oklch(var(--black));
 		line-height: 1;
 		text-decoration: none;
 	}
 	.links:has(a:hover) a:not(:hover) {
-		color: gray;
+		color: oklch(var(--gray-25));
 	}
 	.links a:hover {
 		color: var(--black);
 	}
 	.links a.active {
-		color: var(--black);
+		color: oklch(var(--black));
 		text-decoration: underline;
-		text-decoration-color: var(--accent);
+		text-decoration-color: oklch(var(--accent));
 		text-decoration-thickness: 0.2em;
 		text-underline-offset: 0.5em;
 	}
 	.internal-links {
 		display: flex;
-		gap: 1em;
+		/* gap: 1em; */
 	}
 	.social-links,
 	.social-links a {
@@ -117,8 +117,7 @@ import HeaderLink from './HeaderLink.astro';
 		padding: 0.5em;
 	}
 	.social-links a:hover {
-		/* background-color: color-mix(in oklch, var(--accent) 5%, transparent 95%); */
-		color: var(--accent);
+		color: oklch(var(--accent));
 	}
 	@media (max-width: 720px) {
 		.social-links {
