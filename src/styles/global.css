@@ -125,13 +125,18 @@ img {
 
 code {
   border-radius: 2px;
-  background-color: rgb(var(--gray-light));
+  background-color: oklch(var(--gray-10));
   padding: 2px 5px;
 }
 
 pre {
+  margin-block: 0 1em;
   border-radius: 8px;
-  padding: 1.5em;
+  padding: 1rem 2rem;
+}
+
+.prose pre {
+  grid-column: popout;
 }
 
 pre > code {

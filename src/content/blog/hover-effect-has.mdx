@@ -1,0 +1,52 @@
+---
+title: 'Cool :hover effect utilizing the new :has() selector'
+description: 'A long-time favorite hover effect of mine that can now be done more easily with the :has() selector.'
+pubDate: 'April 2 2024'
+---
+
+The :has() pseudo-class in CSS is a powerful new selector that allows you to target elements based on the presence of other descendent elements. One creative use case is applying a hover effect that changes the opacity of sibling elements while leaving the hovered element untouched.
+
+This effect can be useful for drawing attention to the hovered element on a page with many similar elements like product tiles or image galleries. By subtly fading out the other elements, the hovered element stands out more prominently.
+
+Here's how you can implement this technique:
+
+```html
+<!-- HTML -->
+<nav class="menu">
+  <a class="menu-item" href="/">Home</a>
+  <a class="menu-item" href="/blog">Blog</a>
+  <a class="menu-item" href="/projects">Projects</a>
+  <a class="menu-item" href="/contact">Contact</a>
+</nav>
+
+<!-- CSS -->
+<style>
+  .menu {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .menu-item {
+    transition: opacity 300ms;
+  }
+
+  .container:has(.menu-item:hover) .item:not(:hover) {
+    opacity: 0.5;
+  }
+</style>
+```
+
+In this example, we have a container with multiple child <code>.item</code> elements laid out horizontally using <code>display: flex</code>.
+
+The key lies in the CSS selector <code>.container:has(.item:hover) .item:not(:hover)</code>. Let's break it down:
+
+1. <code>.container:has(.item:hover)</code> targets the container element if it has a child .item that is being hovered over.
+1. <code>.item:not(:hover)</code> selects all .item elements that are not currently being hovered over. By combining these
+   two selectors, we can apply styles (in this case opacity: 0.5) to all .item elements that are not being hovered over,
+   but only when one of the other .item elements is being hovered over.
+
+The transition property is added to create a smooth opacity change when hovering over elements.
+
+This technique opens up possibilities for creative hover effects that can enhance user experience and draw attention to important elements on a page.
+
+Keep in mind that the :has() pseudo-class has limited browser support at the moment, so you may need to use vendor prefixes or provide fallbacks for older browsers. Additionally, this effect can be further customized by adjusting the opacity value or applying other styles to the affected elements.
