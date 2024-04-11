@@ -12,14 +12,9 @@ const posts = (await getCollection('blog'))
 
 <BaseLayout title='Home' description='Welcome to the Ethrdome.'>
 	<h1>Ethan Morris</h1>
-	<p class='byline'>
-		<strong>Developer</strong> at <a href='https://centralstatesmarketing.com'>Central States Marketing</a>
-	</p>
-	<p>
-		I'm a developer and I love building (and occassionally breaking) things. Currently, I live in Illinois and work at <a
-			href='https://centralstatesmarketing.com'>Central States Marketing</a
-		> as a web developer.
-	</p>
+	<p class='byline'>Developer at <a href='https://centralstatesmarketing.com'>Central States Marketing</a></p>
+	<p>My passions lie in building (and occasionally breaking) things, solving problems, and being a lifelong learner.</p>
+
 
 	<h2>Featured Projects</h2>
 	<div class='gallery'>
@@ -70,25 +65,10 @@ const posts = (await getCollection('blog'))
 	</div>
 
 	<h2>About Me</h2>
-	<p>
-		I've been building websites since I was 12, and I've been working professionally for the last 3 years. I've worked
-		with a variety of technologies, but I'm most comfortable with the MERN stack.
-	</p>
-	<p>
-		I'm currently working on a few projects, including a new version of this website, a new version of my personal blog,
-		and a few other things. I'm also working on a few open source projects, including a few for the <a
-			href='https://github.com/ethrmor'>Chug League</a
-		>.
-	</p>
-	<a href='/about'>More about me</a>
+	<p>Hi, I'm Ethan! Thanks for coming to my little corner of the internet.</p>
+	<p>I'm a software developer with a passion for building websites and web applications. I've been writing code professionally for more than 3 years, but my experience in building websites extends back more than 20 years.</p>
 
-	<h2>Work</h2>
-	<p>Here are some of the places I've worked.</p>
-	<ul>
-		<li>Central States Marketing</li>
-		<li>Freelance</li>
-	</ul>
-	<a href='/resume' download>Download resume</a>
+	<a href='/about'>More about me</a>
 
 	<h2>Latest Posts</h2>
 
@@ -106,32 +86,29 @@ const posts = (await getCollection('blog'))
 	</ul>
 
 	<a href='/blog'>View all posts</a>
-
-	<h2>Reach Me</h2>
-	<p>Feel free to reach out to me on any of the following platforms.</p>
-	<ul>
-		<li>Email: ethan[at]ethrmor[dot]com</li>
-		<li>GitHub: <a href='https://github.com/ethrmor'>ethrmor</a></li>
-		<li>LinkedIn: <a href='https://www.linkedin.com/in/ethanmorris/'>ethrmor</a></li>
-		<li>Twitter: <a href='https://twitter.com/ethrmor'>ethrmor</a></li>
-	</ul>
 </BaseLayout>
 
 <style>
 	h1 {
-		margin-block-start: 3rem;
+		margin-block: 2rem 0;
 	}
 	h2 {
 		margin-block-start: 2rem;
-		font-size: var(--fs-lg);
 	}
 	h3 {
 		margin-block-start: 0.5rem;
-		font-size: var(--fs-base);
+	}
+	span {
+		font-size: var(--fs-sm);
+		font-weight: 400;
+	}
+	p:has(em) {
+		margin-block-end: .5rem;
 	}
 	.byline {
-		font-size: var(--fs-md);
+		color: oklch(var(--gray-50));
 	}
+
 	.feature {
 		margin: 0;
 		border: 2px solid oklch(var(--accent));
@@ -166,10 +143,10 @@ const posts = (await getCollection('blog'))
 	}
 	.gallery .wrapper > li {
 		display: flex;
-		flex: 1 0 100%;
+		flex: 1 0 90%;
 		justify-content: center;
 		align-items: start;
-		width: min(100%, 60ch);
+		width: min(90%, 60ch);
 	}
 
 	.gallery .wrapper > li:not(:last-child) {
@@ -178,7 +155,7 @@ const posts = (await getCollection('blog'))
 
 	.gallery .wrapper::after {
 		align-self: stretch;
-		padding-inline-end: max(var(--grid-gap), (100vw - var(--grid-content)) / 2 - var(--grid-gap));
+		padding-inline-end: max(var(--grid-gap),(100vw - var(--grid-content)) / 2 + (var(--grid-gap) / 2));
 		content: '';
 	}
 	.posts {

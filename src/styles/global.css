@@ -1,6 +1,5 @@
 :root {
-  --accent: 46% 0.1 162;
-  --accent-dark: 38% 0.1 162;
+  --accent: 58.06% 0.1 209.12;
   --white: 100% 0 0;
   --gray-10: 95% 0 162;
   --gray-25: 75% 0 162;
@@ -59,25 +58,21 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.5em 0;
   color: oklch(var(--black));
   line-height: 1.2;
 }
 
 h1 {
-  font-size: var(--fs-xxl);
+  font-size: var(--fs-md);
 }
 
 h2 {
-  font-size: var(--fs-xl);
+  font-size: var(--fs-base);
 }
 
 h3 {
-  font-size: var(--fs-lg);
-}
-
-h4 {
-  font-size: var(--fs-md);
+  font-size: var(--fs-base);
 }
 
 strong,
@@ -87,12 +82,12 @@ b {
 
 a {
   color: inherit;
-  text-decoration-color: oklch(var(--accent));
-  text-underline-offset: 0.25em;
+  text-decoration-color: oklch(var(--gray-25));
+  text-decoration-thickness: 0.125em;
 }
 
 a:hover {
-  text-decoration-thickness: 0.25em;
+  text-decoration-color: oklch(var(--accent));
 }
 
 p,

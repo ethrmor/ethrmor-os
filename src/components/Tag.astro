@@ -1,1 +1,24 @@
-<a href="/">Astro</a>
+---
+interface Props {
+	href: string;
+	name: string;
+}
+
+const { href, name } = Astro.props;
+---
+
+<a href={href} class='tag'>#{name}</a>
+
+<style>
+	a {
+		display: inline-block;
+		border-radius: calc(1px * infinity);
+		background-color: oklch(var(--accent) / 0.1);
+		padding: 0em 1em;
+		font-size: var(--fs-sm);
+		text-decoration: none;
+	}
+	a:hover {
+		color: oklch(var(--accent));
+	}
+</style>

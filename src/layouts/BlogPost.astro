@@ -1,4 +1,5 @@
 ---
+import Tag from '@components/Tag.astro';
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
 import BaseLayout from './BaseLayout.astro';
@@ -11,6 +12,7 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
 <BaseLayout title={title} description={description}>
 	<article class='full prose'>
 		<div class='title'>
+			<h1>{title}</h1>
 			<div class='date'>
 				<FormattedDate date={pubDate} />
 				{
@@ -20,8 +22,10 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
 						</div>
 					)
 				}
+				<span>·</span>
+				<span class='time-to-read'>8 min read</span>
 			</div>
-			<h1>{title}</h1>
+			<div>{tags && tags.map((tag) => <Tag href={`/blog/tags/${tag}`} name={tag} />)}</div>
 		</div>
 		<slot />
 	</article>
@@ -49,6 +53,10 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
 	}
 	.last-updated-on {
 		font-style: italic;
+	}
+	.time-to-read {
+		display: inline-block;
+		font-size: var(--fs-sm);
 	}
 	.tags {
 		display: flex;
