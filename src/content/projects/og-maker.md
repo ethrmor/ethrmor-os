@@ -1,6 +1,7 @@
 ---
 title: OG Maker
 summary: Make Open Graph images in the browser. Pick a template, type a headline, download a PNG.
+stack: React, Vite
 year: 2026
 status: in progress
 url: https://og.ethrmor.com

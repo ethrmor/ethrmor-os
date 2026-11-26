@@ -3,6 +3,7 @@ import '@fontsource-variable/manrope';
 import { ClientRouter } from 'astro:transitions';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import Rink from '../components/Rink.astro';
 import { SITE_TITLE } from '../consts';
 import '../styles/global.css';
 
@@ -26,8 +27,8 @@ const fullTitle = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
 		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
 		<link rel='alternate' type='application/rss+xml' title={SITE_TITLE} href='/rss.xml' />
 		<meta name='generator' content={Astro.generator} />
-		<meta name='theme-color' content='#fcfdfd' media='(prefers-color-scheme: light)' />
-		<meta name='theme-color' content='#0f1418' media='(prefers-color-scheme: dark)' />
+		<meta name='theme-color' content='#f9fbfd' media='(prefers-color-scheme: light)' />
+		<meta name='theme-color' content='#0b0c0f' media='(prefers-color-scheme: dark)' />
 
 		<link rel='canonical' href={canonicalURL} />
 
@@ -73,6 +74,7 @@ const fullTitle = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
 	</head>
 	<body>
 		<a class='skip-link' href='#main'>Skip to content</a>
+		<Rink />
 		<Header />
 		<main id='main' class='layout-grid'>
 			<slot />

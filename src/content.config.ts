@@ -20,6 +20,7 @@ const projects = defineCollection({
 		z.object({
 			title: z.string(),
 			summary: z.string(),
+			stack: z.string(),
 			year: z.number(),
 			status: z.enum(['live', 'in progress', 'internal']),
 			url: z.url().optional(),

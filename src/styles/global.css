@@ -6,18 +6,21 @@
 :root {
   color-scheme: light;
 
-  --bg: oklch(99.2% 0.003 215);
-  --surface: oklch(97.2% 0.006 215);
-  --surface-2: oklch(94.5% 0.008 215);
-  --ink: oklch(21% 0.016 235);
-  --ink-2: oklch(43% 0.016 235);
-  --ink-3: oklch(53% 0.014 235);
-  --line: oklch(91% 0.008 220);
-  --line-strong: oklch(84% 0.01 220);
-  --accent: oklch(56% 0.1 209);
-  --accent-ink: oklch(47% 0.095 212);
-  --accent-wash: oklch(56% 0.1 209 / 0.1);
-  --shadow: 0 1px 2px oklch(21% 0.016 235 / 0.06), 0 6px 8px -4px oklch(21% 0.016 235 / 0.08);
+  /* Ice, near-black, Blackhawks red. Rink blue is for markings only. */
+  --bg: oklch(98.7% 0.004 245);
+  --surface: oklch(96.4% 0.006 245);
+  --surface-2: oklch(93.6% 0.008 245);
+  --ink: oklch(17% 0.006 260);
+  --ink-2: oklch(40% 0.008 255);
+  --ink-3: oklch(51% 0.008 255);
+  --line: oklch(90% 0.008 245);
+  --line-strong: oklch(82% 0.01 245);
+  --accent: oklch(54% 0.205 26);
+  --accent-ink: oklch(50% 0.19 26);
+  --accent-wash: oklch(54% 0.205 26 / 0.09);
+  --rink-red: oklch(58% 0.2 26 / 0.32);
+  --rink-blue: oklch(52% 0.14 255 / 0.22);
+  --shadow: 0 1px 2px oklch(17% 0.006 260 / 0.06), 0 10px 24px -14px oklch(17% 0.006 260 / 0.28);
 
   --font: 'Manrope Variable', -apple-system, 'Segoe UI', sans-serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
@@ -50,18 +53,20 @@
 :root[data-theme='dark'] {
   color-scheme: dark;
 
-  --bg: oklch(16.5% 0.012 240);
-  --surface: oklch(20% 0.014 240);
-  --surface-2: oklch(24% 0.016 240);
-  --ink: oklch(94.5% 0.006 215);
-  --ink-2: oklch(77% 0.012 220);
-  --ink-3: oklch(66% 0.012 225);
-  --line: oklch(27% 0.014 240);
-  --line-strong: oklch(35% 0.016 240);
-  --accent: oklch(76% 0.11 202);
-  --accent-ink: oklch(80% 0.1 200);
-  --accent-wash: oklch(76% 0.11 202 / 0.12);
-  --shadow: 0 1px 2px oklch(0% 0 0 / 0.3), 0 8px 16px -8px oklch(0% 0 0 / 0.5);
+  --bg: oklch(14.5% 0.004 260);
+  --surface: oklch(18.5% 0.005 260);
+  --surface-2: oklch(22.5% 0.006 260);
+  --ink: oklch(95.5% 0.004 245);
+  --ink-2: oklch(77% 0.008 245);
+  --ink-3: oklch(64% 0.008 250);
+  --line: oklch(26% 0.006 260);
+  --line-strong: oklch(34% 0.008 260);
+  --accent: oklch(64% 0.2 25);
+  --accent-ink: oklch(70% 0.17 25);
+  --accent-wash: oklch(64% 0.2 25 / 0.14);
+  --rink-red: oklch(62% 0.19 25 / 0.3);
+  --rink-blue: oklch(62% 0.13 255 / 0.24);
+  --shadow: 0 1px 2px oklch(0% 0 0 / 0.4), 0 12px 28px -14px oklch(0% 0 0 / 0.7);
 }
 
 /* ------------------------------------------------------------------

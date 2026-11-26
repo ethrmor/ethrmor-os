@@ -1,6 +1,7 @@
 ---
 title: Fantasy Football League
-summary: Home base for our fantasy league, with standings, schedules, and weekly recaps for twelve teams.
+summary: Home base for the fantasy league I used to run, with standings, schedules, and weekly recaps for twelve teams.
+stack: Next.js
 year: 2022
 status: live
 url: https://chug-official.vercel.app

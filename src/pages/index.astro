@@ -1,7 +1,7 @@
 ---
 import FormattedDate from '@components/FormattedDate.astro';
 import PostList from '@components/PostList.astro';
-import ProjectList from '@components/ProjectList.astro';
+import ProjectCards from '@components/ProjectCards.astro';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { NOW, SITE_DESCRIPTION } from '../consts';
@@ -17,25 +17,24 @@ const projects = (await getCollection('projects')).sort(
 	<section class='intro' aria-labelledby='intro-title'>
 		<h1 id='intro-title' class='rise' style='--i: 0'>Ethan Morris</h1>
 		<p class='lede rise' style='--i: 1'>
-			I build websites at <a href='https://centralstatesmarketing.com'>Central States Marketing</a>. Before that I spent
-			eight years as a financial advisor, which still shows up in what I make.
+			Web developer, dad of two, and a right wing who picked up hockey at 36.
 		</p>
 		<p class='rise' style='--i: 2'>
-			This is where I write about small front-end details and keep the things I'm building, finished or not.
+			I build websites at <a href='https://centralstatesmarketing.com'>Central States Marketing</a>. Before that I spent
+			eight years as a financial advisor. This is where I write about front-end details and keep the things I'm building,
+			finished or not.
 		</p>
 		<p class='now rise' style='--i: 3'>
 			<span class='now-label'>Now</span>
 			<span>{NOW.text}</span>
-			<span class='meta'>Updated <FormattedDate date={NOW.updated} style='short' /></span>
+			<span class='meta'><FormattedDate date={NOW.updated} style='short' /></span>
 		</p>
 	</section>
 
 	<section class='section full' aria-labelledby='projects-title'>
-		<div class='section-head'>
-			<h2 id='projects-title'>Projects</h2>
-			<a class='quiet-link' href='https://github.com/ethrmor'>More on GitHub <span class='arrow'>→</span></a>
-		</div>
-		<ProjectList projects={projects} />
+		<ProjectCards projects={projects}>
+			<h2 slot='head' id='projects-title'>Projects</h2>
+		</ProjectCards>
 	</section>
 
 	<section class='section' aria-labelledby='writing-title'>
@@ -48,8 +47,11 @@ const projects = (await getCollection('projects')).sort(
 </BaseLayout>
 
 <style>
+	.intro {
+		padding-top: clamp(0rem, 4vw, 3rem);
+	}
 	.intro h1 {
-		margin-bottom: 0.4em;
+		margin-bottom: 0.35em;
 		font-size: var(--fs-display);
 		letter-spacing: -0.035em;
 	}
@@ -59,8 +61,9 @@ const projects = (await getCollection('projects')).sort(
 	}
 	.lede {
 		color: var(--ink) !important;
+		font-weight: 550;
 		font-size: var(--fs-md);
-		line-height: 1.5;
+		line-height: 1.45;
 	}
 	.now {
 		display: flex;
@@ -68,12 +71,8 @@ const projects = (await getCollection('projects')).sort(
 		align-items: baseline;
 		gap: 0.35rem 0.75rem;
 		margin-top: 2rem;
-		border: 1px solid var(--line);
-		border-radius: 12px;
-		background-color: color-mix(in oklch, var(--surface) 70%, transparent);
-		padding: 0.55rem 1.1rem;
-		width: fit-content;
-		max-width: 100% !important;
+		border-top: 1px solid var(--line);
+		padding-top: 1rem;
 		color: var(--ink) !important;
 		font-size: var(--fs-sm);
 		line-height: 1.5;
@@ -91,15 +90,5 @@ const projects = (await getCollection('projects')).sort(
 		width: 7px;
 		height: 7px;
 		content: '';
-		animation: pulse 2.6s var(--ease-out) infinite;
-	}
-	@keyframes pulse {
-		0% {
-			box-shadow: 0 0 0 0 color-mix(in oklch, var(--accent) 55%, transparent);
-		}
-		70%,
-		100% {
-			box-shadow: 0 0 0 7px transparent;
-		}
 	}
 </style>

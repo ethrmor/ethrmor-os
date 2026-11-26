@@ -2,12 +2,22 @@
 
 export const SITE_TITLE = '<ethrmor />';
 export const SITE_DESCRIPTION =
-	'Ethan Morris is a web developer who writes about front-end details and keeps the things he is building here.';
+	'Ethan Morris is a web developer, dad of two, and a right wing who picked up hockey at 36.';
 
 // The "Now" line on the home page. Update it whenever it stops being true.
 export const NOW = {
 	text: 'Writing new topics for the Financial Handbook, one plain-English page at a time.',
 	updated: new Date('2026-11-25'),
+};
+
+// Hockey card on the About page.
+export const PLAYER = {
+	team: 'Bombers',
+	number: 91,
+	position: 'Right wing',
+	shoots: 'Right',
+	started: 2026,
+	favorite: 'Chicago Blackhawks',
 };
 
 export const SOCIAL = {

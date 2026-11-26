@@ -1,5 +1,15 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import { PLAYER } from '../consts';
+
+const stats = [
+	{ label: 'Team', value: PLAYER.team },
+	{ label: 'No.', value: PLAYER.number },
+	{ label: 'Pos', value: 'RW' },
+	{ label: 'Shoots', value: PLAYER.shoots },
+	{ label: 'Since', value: PLAYER.started },
+	{ label: 'Fan of', value: 'Blackhawks' },
+];
 
 const work = [
 	{
@@ -17,13 +27,28 @@ const work = [
 ];
 ---
 
-<BaseLayout title='About' description='Ethan Morris: web developer, former financial advisor.'>
+<BaseLayout title='About' description='Ethan Morris: web developer, dad of two, right wing for the Bombers.'>
 	<h1>About</h1>
+
+	<dl class='player' aria-label='Hockey stats'>
+		{
+			stats.map(({ label, value }) => (
+				<div>
+					<dt>{label}</dt>
+					<dd>{value}</dd>
+				</div>
+			))
+		}
+	</dl>
+
 	<p class='lede'>
-		My interest in the web started back in the days of dial-up. It took a detour through nearly ten years in finance
-		before it became my job.
+		I'm a web developer and a dad of two. Most of my time outside work goes to my kids, and the rest lately goes to
+		hockey: I started playing in {PLAYER.started}, at 36, and skate right wing for the Bombers in number {PLAYER.number}.
 	</p>
-	<p>A few things I've done along the way:</p>
+	<p>
+		My interest in the web started back in the days of dial-up. It took a detour through nearly ten years in finance
+		before it became my job. A few things I've done since:
+	</p>
 	<ul>
 		<li>Built more than 20 websites while helping maintain upwards of 400 client sites.</li>
 		<li>Run client email marketing, turning agency designs into hand-coded HTML emails.</li>
@@ -53,17 +78,47 @@ const work = [
 </BaseLayout>
 
 <style>
-	.lede {
-		font-size: var(--fs-md);
-		line-height: 1.5;
-	}
 	p,
 	li {
 		color: var(--ink-2);
 	}
 	.lede {
 		color: var(--ink);
+		font-size: var(--fs-md);
+		line-height: 1.5;
 	}
+
+	/* The back of a hockey card. */
+	.player {
+		display: grid;
+		grid-template-columns: repeat(6, 1fr);
+		margin: 1.5rem 0 2.5rem;
+		border: 1px solid var(--line);
+		border-top: 4px solid var(--accent);
+		border-radius: 0 0 var(--radius) var(--radius);
+		background: var(--surface);
+	}
+	.player div {
+		padding: 0.75rem 1rem 0.85rem;
+	}
+	.player div + div {
+		border-left: 1px solid var(--line);
+	}
+	dt {
+		color: var(--ink-3);
+		font-weight: 600;
+		font-size: 0.6875rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+	dd {
+		margin: 0.1rem 0 0;
+		font-weight: 750;
+		font-size: var(--fs-md);
+		letter-spacing: -0.01em;
+		font-variant-numeric: tabular-nums;
+	}
+
 	blockquote {
 		margin-block: 3.5rem;
 		border-block: 1px solid var(--line);
@@ -99,6 +154,17 @@ const work = [
 		margin-bottom: 0.75em;
 		color: var(--ink-3);
 		font-size: var(--fs-sm);
+	}
+	@media (max-width: 640px) {
+		.player {
+			grid-template-columns: repeat(3, 1fr);
+		}
+		.player div:nth-child(4) {
+			border-left: 0;
+		}
+		.player div:nth-child(n + 4) {
+			border-top: 1px solid var(--line);
+		}
 	}
 	@media (max-width: 560px) {
 		.timeline li {

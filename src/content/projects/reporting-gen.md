@@ -1,6 +1,7 @@
 ---
 title: Reporting Gen
 summary: An internal tool that turns email campaign numbers into ready-to-send PDF reports, so nobody has to build them by hand.
+stack: Next.js, React PDF
 year: 2023
 status: internal
 url: https://reporting-gen.vercel.app

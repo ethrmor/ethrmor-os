@@ -1,0 +1,70 @@
+---
+// A corner of a hockey rink seen from above: the boards, the goal line and
+// crease, and one faceoff circle. It stands in for the old
+// background grid, drawn faintly behind the top of every page.
+---
+
+<div class='rink' aria-hidden='true'>
+	<svg viewBox='0 0 800 600' preserveAspectRatio='xMaxYMin meet' fill='none'>
+		<!-- Boards, with the rounded corner -->
+		<path class='boards' d='M0 40H560a200 200 0 0 1 200 200V600'></path>
+
+		<!-- Goal line and crease -->
+		<path class='red' d='M672 76V600'></path>
+		<path class='crease' d='M672 266a52 52 0 0 0 0 104'></path>
+		<rect class='red' x='672' y='296' width='20' height='44' rx='4'></rect>
+
+		<!-- Faceoff circle with hash marks and dot -->
+		<circle class='red' cx='430' cy='318' r='92'></circle>
+		<path class='red' d='M410 226v-14M450 226v-14M410 410v14M450 410v14'></path>
+		<path class='red' d='M406 304h-16v-12M454 304h16v-12M406 332h-16v12M454 332h16v12'></path>
+		<circle class='dot' cx='430' cy='318' r='9'></circle>
+	</svg>
+</div>
+
+<style>
+	.rink {
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: 0;
+		z-index: -1;
+		overflow: hidden;
+		mask-image: linear-gradient(to bottom, #000 35%, transparent 95%), linear-gradient(to left, #000 40%, transparent);
+		mask-composite: intersect;
+		pointer-events: none;
+	}
+	svg {
+		display: block;
+		margin-left: auto;
+		translate: 60px 0;
+		width: min(860px, 75vw);
+		height: auto;
+	}
+	.boards {
+		stroke: var(--line-strong);
+		stroke-width: 2;
+	}
+	.red {
+		stroke: var(--rink-red);
+		stroke-width: 2;
+	}
+	.crease {
+		fill: var(--rink-blue);
+		stroke: var(--rink-red);
+		stroke-width: 2;
+	}
+	.dot {
+		fill: var(--rink-red);
+	}
+	@media (max-width: 720px) {
+		.rink {
+			opacity: 0.7;
+		}
+		svg {
+			translate: 0 0;
+			margin-right: -35vw;
+			width: 110vw;
+		}
+	}
+</style>
