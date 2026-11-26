@@ -50,16 +50,21 @@ const fullTitle = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
 		<!-- Set the theme before first paint so there is no flash. -->
 		<script is:inline>
 			(() => {
-				const apply = () => {
+				const theme = () => {
 					let stored = null;
 					try {
 						stored = localStorage.getItem('theme');
 					} catch {}
 					const dark = stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-					document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+					return dark ? 'dark' : 'light';
+				};
+				const apply = (doc = document) => {
+					doc.documentElement.dataset.theme = theme();
 				};
 				apply();
-				document.addEventListener('astro:after-swap', apply);
+				// Set the theme on the incoming page before it is swapped in. Setting it
+				// afterwards lets the page render one frame in light mode (a white flash).
+				document.addEventListener('astro:before-swap', (event) => apply(event.newDocument));
 				matchMedia('(prefers-color-scheme: dark)').addEventListener('change', apply);
 			})();
 		</script>
