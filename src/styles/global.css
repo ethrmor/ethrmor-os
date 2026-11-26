@@ -18,8 +18,9 @@
   --accent: oklch(54% 0.205 26);
   --accent-ink: oklch(50% 0.19 26);
   --accent-wash: oklch(54% 0.205 26 / 0.09);
-  --rink-red: oklch(58% 0.2 26 / 0.32);
-  --rink-blue: oklch(52% 0.14 255 / 0.22);
+  /* Solid (not transparent) so crossing lines don't leave darker spots. */
+  --rink-red: color-mix(in srgb, oklch(58% 0.2 26) 32%, oklch(98.7% 0.004 245));
+  --rink-blue: color-mix(in srgb, oklch(52% 0.14 255) 22%, oklch(98.7% 0.004 245));
   --shadow: 0 1px 2px oklch(17% 0.006 260 / 0.06), 0 10px 24px -14px oklch(17% 0.006 260 / 0.28);
 
   --font: 'Manrope Variable', -apple-system, 'Segoe UI', sans-serif;
@@ -64,8 +65,8 @@
   --accent: oklch(64% 0.2 25);
   --accent-ink: oklch(70% 0.17 25);
   --accent-wash: oklch(64% 0.2 25 / 0.14);
-  --rink-red: oklch(62% 0.19 25 / 0.3);
-  --rink-blue: oklch(62% 0.13 255 / 0.24);
+  --rink-red: color-mix(in srgb, oklch(62% 0.19 25) 30%, oklch(14.5% 0.004 260));
+  --rink-blue: color-mix(in srgb, oklch(62% 0.13 255) 24%, oklch(14.5% 0.004 260));
   --shadow: 0 1px 2px oklch(0% 0 0 / 0.4), 0 12px 28px -14px oklch(0% 0 0 / 0.7);
 }
 
