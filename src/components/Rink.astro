@@ -36,6 +36,14 @@ const neutralSpots = [800, 1200].flatMap((x) => [
 	{ x, y: MID + 220 },
 ]);
 
+// The net seen from above: posts 6 ft apart on the goal line, the base frame
+// curving back about 3.7 ft behind it.
+const net = (goal: number, dir: number) => {
+	const b = goal - dir * 37;
+	const c = goal - dir * 22;
+	return `M${goal} ${MID - 30}H${c}Q${b} ${MID - 30} ${b} ${MID - 15}V${MID + 15}Q${b} ${MID + 30} ${c} ${MID + 30}H${goal}`;
+};
+
 // Hash marks on the top and bottom of a faceoff circle, and the L marks around its spot.
 const hashes = (x: number, y: number) =>
 	[-1, 1]
@@ -50,6 +58,12 @@ const hashes = (x: number, y: number) =>
 
 <div class='rink' aria-hidden='true'>
 	<svg viewBox={`0 0 ${W} ${H}`} fill='none'>
+		<defs>
+			<pattern id='rink-mesh' width='7' height='7' patternUnits='userSpaceOnUse' patternTransform='rotate(45)'>
+				<path class='mesh' d='M0 0V7M0 0H7'></path>
+			</pattern>
+		</defs>
+
 		<!-- Boards -->
 		<rect class='boards' x={INSET} y={INSET} width={W - INSET * 2} height={H - INSET * 2} rx={R}></rect>
 
@@ -71,7 +85,10 @@ const hashes = (x: number, y: number) =>
 					{/* Goal line, crease, net, and the trapezoid behind it */}
 					<path class='red' d={`M${goal} ${boardY(goal)}V${H - boardY(goal)}`} />
 					<path class='crease' d={`M${goal} ${MID - 60}a60 60 0 0 ${dir === 1 ? 1 : 0} 0 120`} />
-					<rect class='red' x={dir === 1 ? goal - 40 : goal} y={MID - 30} width='40' height='60' rx='8' />
+					<path class='net' d={net(goal, dir)} />
+					<path class='frame' d={net(goal, dir)} />
+					<circle class='post' cx={goal} cy={MID - 30} r='4' />
+					<circle class='post' cx={goal} cy={MID + 30} r='4' />
 					<path
 						class='red'
 						d={`M${goal} ${MID - 110}L${goal - dir * 109} ${MID - 140}M${goal} ${MID + 110}L${goal - dir * 109} ${MID + 140}`}
@@ -136,6 +153,23 @@ const hashes = (x: number, y: number) =>
 	.blue-line {
 		stroke: var(--rink-blue);
 		stroke-width: 3;
+	}
+	.net {
+		fill: url(#rink-mesh);
+	}
+	.mesh {
+		stroke: var(--line-strong);
+		stroke-width: 1.2;
+	}
+	.frame {
+		/* Solid, so the netting doesn't show through the frame. */
+		stroke: color-mix(in srgb, var(--accent) 38%, var(--bg));
+		stroke-width: 5;
+		stroke-linejoin: round;
+	}
+	.post {
+		fill: var(--accent);
+		opacity: 0.55;
 	}
 	.crease {
 		fill: var(--rink-blue);
