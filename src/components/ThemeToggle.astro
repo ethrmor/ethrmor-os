@@ -27,12 +27,21 @@
 	document.addEventListener('click', (event) => {
 		const button = (event.target as Element | null)?.closest('.theme-toggle');
 		if (!button) return;
-		const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-		document.documentElement.dataset.theme = next;
-		try {
-			localStorage.setItem('theme', next);
-		} catch {}
-		sync();
+		const root = document.documentElement;
+		const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+		const apply = () => {
+			root.dataset.theme = next;
+			try {
+				localStorage.setItem('theme', next);
+			} catch {}
+			sync();
+		};
+
+		// Resurface the ice: the new theme sweeps across like a Zamboni pass.
+		const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		if (!document.startViewTransition || reduce) return apply();
+		root.classList.add('zamboni');
+		document.startViewTransition(apply).finished.finally(() => root.classList.remove('zamboni'));
 	});
 
 	document.addEventListener('astro:page-load', sync);

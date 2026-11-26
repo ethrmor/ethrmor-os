@@ -4,10 +4,22 @@ import PostList from '@components/PostList.astro';
 import ProjectCards from '@components/ProjectCards.astro';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { NOW, SITE_DESCRIPTION } from '../consts';
+import { HOME_TIME_ZONE, NEXT_GAME, NOW, SITE_DESCRIPTION } from '../consts';
 import { getPosts } from '../lib/posts';
 
 const posts = (await getPosts()).slice(0, 5);
+
+const game = NEXT_GAME && new Date(NEXT_GAME.date) > new Date() ? NEXT_GAME : null;
+const gameTime =
+	game &&
+	new Date(game.date).toLocaleString('en-US', {
+		weekday: 'short',
+		month: 'short',
+		day: 'numeric',
+		hour: 'numeric',
+		minute: '2-digit',
+		timeZone: HOME_TIME_ZONE,
+	});
 const projects = (await getCollection('projects')).sort(
 	(a, b) => Number(b.data.featured) - Number(a.data.featured) || a.data.order - b.data.order,
 );
@@ -29,6 +41,17 @@ const projects = (await getCollection('projects')).sort(
 			<span>{NOW.text}</span>
 			<span class='meta now-date'>Updated <FormattedDate date={NOW.updated} style='short' /></span>
 		</p>
+		{
+			game && (
+				<p class='now game rise' style='--i: 4' data-starts={game.date}>
+					<span class='now-label game-label'>Next game</span>
+					<span>
+						Bombers vs. {game.opponent}, <time datetime={game.date}>{gameTime}</time>
+						{game.rink && <span class='meta'> at {game.rink}</span>}
+					</span>
+				</p>
+			)
+		}
 	</section>
 
 	<section class='section full' aria-labelledby='projects-title'>
@@ -45,6 +68,15 @@ const projects = (await getCollection('projects')).sort(
 		<PostList posts={posts} />
 	</section>
 </BaseLayout>
+
+<script>
+	// Hide the next game once it has started (the page itself may be older than that).
+	function hidePastGame() {
+		const game = document.querySelector<HTMLElement>('.game[data-starts]');
+		if (game && new Date(game.dataset.starts!).getTime() < Date.now()) game.hidden = true;
+	}
+	document.addEventListener('astro:page-load', hidePastGame);
+</script>
 
 <style>
 	.intro {
@@ -87,6 +119,15 @@ const projects = (await getCollection('projects')).sort(
 	}
 	.now {
 		max-width: 62ch !important;
+	}
+	.game {
+		margin-top: 0.75rem;
+		border-top: 0;
+		padding-top: 0;
+	}
+	.game .game-label::before {
+		background-color: transparent;
+		box-shadow: inset 0 0 0 1.5px var(--accent);
 	}
 	.now-date {
 		grid-column: 2;

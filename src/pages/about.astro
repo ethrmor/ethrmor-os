@@ -11,6 +11,16 @@ const stats = [
 	{ label: 'Fan of', value: 'Blackhawks' },
 ];
 
+const season = PLAYER.season;
+const seasonStats = season
+	? [
+			{ label: 'GP', value: season.gp },
+			{ label: 'G', value: season.g },
+			{ label: 'A', value: season.a },
+			{ label: 'PTS', value: season.g + season.a },
+		]
+	: [];
+
 const work = [
 	{
 		role: 'Director of Development',
@@ -30,20 +40,9 @@ const work = [
 <BaseLayout title='About' description='Ethan Morris: director of development, dad of two, winger for the Bombers.'>
 	<h1>About</h1>
 
-	<dl class='player' aria-label='Hockey stats'>
-		{
-			stats.map(({ label, value }) => (
-				<div>
-					<dt>{label}</dt>
-					<dd>{value}</dd>
-				</div>
-			))
-		}
-	</dl>
-
 	<p class='lede'>
-		I'm a director of development and a dad of two. Most of my time outside work goes to my kids, and the rest lately goes to
-		hockey: I started playing in {PLAYER.started}, at 36. I'm a winger for the Bombers, number {PLAYER.number}.
+		I'm a director of development and a dad of two. Most of my time outside work goes to my kids, and the rest lately
+		goes to <a href='#hockey'>hockey</a>.
 	</p>
 	<p>
 		My interest in the web started back in the days of dial-up. It took a detour through nearly ten years in finance
@@ -75,6 +74,40 @@ const work = [
 			))
 		}
 	</ol>
+
+	<section id='hockey' class='hockey' aria-labelledby='hockey-title'>
+		<h2 id='hockey-title'>Hockey</h2>
+		<p>
+			I started playing in {PLAYER.started}, at 36. I'm a winger for the {PLAYER.team}, number {PLAYER.number}. Away from the rink, I cheer
+			for the {PLAYER.favorite}.
+		</p>
+		<dl class='player' aria-label='Player card'>
+			{
+				stats.map(({ label, value }) => (
+					<div>
+						<dt>{label}</dt>
+						<dd>{value}</dd>
+					</div>
+				))
+			}
+		</dl>
+		{
+			season && (
+				<dl class='player season' aria-label={`${season.label} season`}>
+					<div class='season-label'>
+						<dt>Season</dt>
+						<dd>{season.label}</dd>
+					</div>
+					{seasonStats.map(({ label, value }) => (
+						<div>
+							<dt>{label}</dt>
+							<dd>{value}</dd>
+						</div>
+					))}
+				</dl>
+			)
+		}
+	</section>
 </BaseLayout>
 
 <style>
@@ -89,10 +122,15 @@ const work = [
 	}
 
 	/* The back of a hockey card. */
+	.hockey {
+		margin-top: 3.5rem;
+		border-top: 1px solid var(--line);
+		padding-top: 2.5rem;
+	}
 	.player {
 		display: grid;
 		grid-template-columns: repeat(6, 1fr);
-		margin: 1.5rem 0 2.5rem;
+		margin: 1.5rem 0 0;
 		border: 1px solid var(--line);
 		border-top: 4px solid var(--accent);
 		border-radius: 0 0 var(--radius) var(--radius);
@@ -119,6 +157,12 @@ const work = [
 		font-variant-numeric: tabular-nums;
 	}
 
+	.season {
+		grid-template-columns: 1.4fr repeat(4, 1fr);
+		margin-top: 0.75rem;
+		border-top: 1px solid var(--line);
+		border-radius: var(--radius);
+	}
 	blockquote {
 		margin-block: 3.5rem;
 		border-block: 1px solid var(--line);

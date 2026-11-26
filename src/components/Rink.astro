@@ -44,6 +44,11 @@ const net = (goal: number, dir: number) => {
 	return `M${goal} ${MID - 30}H${c}Q${b} ${MID - 30} ${b} ${MID - 15}V${MID + 15}Q${b} ${MID + 30} ${c} ${MID + 30}H${goal}`;
 };
 
+// The hidden goal starts from the right end's top faceoff spot.
+const GOAL_SPOT = 2;
+const spot = zoneSpots[GOAL_SPOT];
+const shot = { x: W - 110 + 16 - spot.x, y: MID - spot.y };
+
 // Hash marks on the top and bottom of a faceoff circle, and the L marks around its spot.
 const hashes = (x: number, y: number) =>
 	[-1, 1]
@@ -56,7 +61,7 @@ const hashes = (x: number, y: number) =>
 		.join('');
 ---
 
-<div class='rink' aria-hidden='true'>
+<div class='rink' aria-hidden='true' data-shot-x={shot.x} data-shot-y={shot.y}>
 	<svg viewBox={`0 0 ${W} ${H}`} fill='none'>
 		<defs>
 			<pattern id='rink-mesh' width='7' height='7' patternUnits='userSpaceOnUse' patternTransform='rotate(45)'>
@@ -96,18 +101,84 @@ const hashes = (x: number, y: number) =>
 		}
 
 		{
-			zoneSpots.map(({ x, y }) => (
+			zoneSpots.map(({ x, y }, i) => (
 				<>
 					<circle class='red' cx={x} cy={y} r='150' />
 					<path class='red' d={hashes(x, y)} />
-					<circle class='red-fill' cx={x} cy={y} r='10' />
+					<circle class:list={['red-fill', { 'goal-spot': i === GOAL_SPOT }]} cx={x} cy={y} r='10' />
 				</>
 			))
 		}
 
 		{neutralSpots.map(({ x, y }) => <circle class='red-fill' cx={x} cy={y} r='10' />)}
+
+		<!-- Shh. Click the faceoff dot in the top right. -->
+		<rect class='goal-light' x={W - 62} y={MID - 18} width='14' height='36' rx='4'></rect>
+		<circle class='puck' cx={spot.x} cy={spot.y} r='8'></circle>
 	</svg>
 </div>
+
+<script>
+	// A hidden goal: click the faceoff dot and a puck slides into the net.
+	function setupGoal() {
+		const rink = document.querySelector<HTMLElement>('.rink');
+		const spot = rink?.querySelector<SVGCircleElement>('.goal-spot');
+		const puck = rink?.querySelector<SVGCircleElement>('.puck');
+		const light = rink?.querySelector<SVGRectElement>('.goal-light');
+		if (!rink || !spot || !puck || !light || rink.dataset.ready) return;
+		rink.dataset.ready = 'true';
+
+		let busy = false;
+		const hit = (event: PointerEvent | MouseEvent) => {
+			if (getComputedStyle(rink).display === 'none') return false;
+			const box = spot.getBoundingClientRect();
+			const pad = 12;
+			return (
+				event.clientX > box.left - pad &&
+				event.clientX < box.right + pad &&
+				event.clientY > box.top - pad &&
+				event.clientY < box.bottom + pad
+			);
+		};
+
+		const onMove = (event: PointerEvent) => {
+			if ((event.target as Element).closest('a, button, input, textarea')) return;
+			document.body.style.cursor = hit(event) ? 'pointer' : '';
+		};
+
+		const onClick = (event: MouseEvent) => {
+			if (busy || !hit(event) || (event.target as Element).closest('a, button')) return;
+			busy = true;
+			const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+			const dx = Number(rink.dataset.shotX);
+			const dy = Number(rink.dataset.shotY);
+
+			const blink = () =>
+				light.animate([{ opacity: 0 }, { opacity: 1 }, { opacity: 0.25 }, { opacity: 1 }, { opacity: 0.25 }, { opacity: 1 }, { opacity: 0 }], {
+					duration: 1600,
+					easing: 'linear',
+				}).finished;
+
+			const shoot = reduce
+				? Promise.resolve()
+				: puck.animate(
+						[
+							{ transform: 'translate(0, 0)', opacity: 1 },
+							{ transform: `translate(${dx}px, ${dy}px)`, opacity: 1, offset: 0.92 },
+							{ transform: `translate(${dx}px, ${dy}px)`, opacity: 0 },
+						],
+						{ duration: 650, easing: 'cubic-bezier(0.3, 0.7, 0.4, 1)' },
+					).finished;
+
+			shoot.then(blink).finally(() => (busy = false));
+		};
+
+		document.addEventListener('pointermove', onMove, { passive: true });
+		document.addEventListener('click', onClick);
+	}
+
+	document.addEventListener('astro:page-load', setupGoal);
+</script>
 
 <style>
 	.rink {
@@ -168,6 +239,14 @@ const hashes = (x: number, y: number) =>
 		stroke: var(--rink-red);
 		stroke-width: 5;
 		stroke-linejoin: round;
+	}
+	.puck {
+		fill: var(--ink);
+		opacity: 0;
+	}
+	.goal-light {
+		fill: var(--accent);
+		opacity: 0;
 	}
 	.crease {
 		fill: var(--rink-blue);

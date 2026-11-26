@@ -9,22 +9,36 @@ interface Props {
 const { projects } = Astro.props;
 
 const status = { live: 'Live', 'in progress': 'In progress', internal: 'Internal tool' } as const;
+const cardNo = (i: number) => String(i + 1).padStart(2, '0');
+const host = (url: string) => new URL(url).host;
 ---
 
 <div class='deck full'>
 	<div class='section-head'>
 		<slot name='head' />
 		<div class='controls'>
-		<button type='button' class='nudge' data-dir='-1' aria-label='Previous projects'>
-			<svg width='16' height='16' viewBox='0 0 16 16' aria-hidden='true'
-				><path d='M13 8H3.5M7.5 3.5 3 8l4.5 4.5' fill='none' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'></path></svg
-			>
-		</button>
-		<button type='button' class='nudge' data-dir='1' aria-label='Next projects'>
-			<svg width='16' height='16' viewBox='0 0 16 16' aria-hidden='true'
-				><path d='M3 8h9.5M8.5 3.5 13 8l-4.5 4.5' fill='none' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'></path></svg
-			>
-		</button>
+			<button type='button' class='nudge' data-dir='-1' aria-label='Previous projects'>
+				<svg width='16' height='16' viewBox='0 0 16 16' aria-hidden='true'
+					><path
+						d='M13 8H3.5M7.5 3.5 3 8l4.5 4.5'
+						fill='none'
+						stroke='currentColor'
+						stroke-width='1.6'
+						stroke-linecap='round'
+						stroke-linejoin='round'></path></svg
+				>
+			</button>
+			<button type='button' class='nudge' data-dir='1' aria-label='Next projects'>
+				<svg width='16' height='16' viewBox='0 0 16 16' aria-hidden='true'
+					><path
+						d='M3 8h9.5M8.5 3.5 13 8l-4.5 4.5'
+						fill='none'
+						stroke='currentColor'
+						stroke-width='1.6'
+						stroke-linecap='round'
+						stroke-linejoin='round'></path></svg
+				>
+			</button>
 		</div>
 	</div>
 
@@ -32,38 +46,94 @@ const status = { live: 'Live', 'in progress': 'In progress', internal: 'Internal
 		{
 			projects.map((project, i) => (
 				<li class='card'>
-					<a href={project.data.url ?? project.data.repo} class='face'>
-						<span class='photo'>
-							<Image
-								src={project.data.image}
-								alt={project.data.imageAlt}
-								widths={[360, 720]}
-								sizes='320px'
-								loading={i < 2 ? 'eager' : 'lazy'}
-							/>
-						</span>
-						<span class='plate'>
-							<span class='name'>{project.data.title}</span>
-							<span class='status' data-status={project.data.status}>
-								{status[project.data.status]}
-							</span>
-						</span>
-						<span class='summary'>{project.data.summary}</span>
-						<span class='stats'>
-							<span>
-								<span class='label'>Year</span>
-								{project.data.year}
-							</span>
-							<span>
-								<span class='label'>Built with</span>
-								{project.data.stack}
-							</span>
-							<span class='set'>
-								<span class='label'>Card</span>
-								{String(i + 1).padStart(2, '0')}
-							</span>
-						</span>
-					</a>
+					<div class='tilt'>
+						<div class='inner'>
+							{/* Front: the photo and the basics. Click to flip. */}
+							<button type='button' class='face front' aria-label={`${project.data.title}: flip card for details`}>
+								<span class='photo'>
+									<Image
+										src={project.data.image}
+										alt={project.data.imageAlt}
+										widths={[360, 720]}
+										sizes='320px'
+										loading={i < 2 ? 'eager' : 'lazy'}
+									/>
+								</span>
+								<span class='plate'>
+									<span class='name'>{project.data.title}</span>
+									<span class='status' data-status={project.data.status}>
+										{status[project.data.status]}
+									</span>
+								</span>
+								<span class='stats'>
+									<span>
+										<span class='label'>Year</span>
+										{project.data.year}
+									</span>
+									<span>
+										<span class='label'>Built with</span>
+										{project.data.stack}
+									</span>
+									<span class='set'>
+										<span class='label'>Card</span>
+										{cardNo(i)}
+									</span>
+								</span>
+								<span class='flip-hint' aria-hidden='true'>
+									Flip
+									<svg width='14' height='14' viewBox='0 0 16 16'>
+										<path
+											d='M2.5 6.5A5.5 5.5 0 0 1 13 5M13.5 9.5A5.5 5.5 0 0 1 3 11M13 2v3h-3M3 14v-3h3'
+											fill='none'
+											stroke='currentColor'
+											stroke-width='1.5'
+											stroke-linecap='round'
+											stroke-linejoin='round'
+										/>
+									</svg>
+								</span>
+							</button>
+
+							{/* Back: the write-up and the links, like the back of a real card. */}
+							<div class='face back' inert>
+								<div class='back-head'>
+									<span class='name'>{project.data.title}</span>
+									<span class='set'>No. {cardNo(i)}</span>
+								</div>
+								<p class='summary'>{project.data.summary}</p>
+								<dl class='back-stats'>
+									<div>
+										<dt class='label'>Status</dt>
+										<dd>{status[project.data.status]}</dd>
+									</div>
+									<div>
+										<dt class='label'>Year</dt>
+										<dd>{project.data.year}</dd>
+									</div>
+									<div>
+										<dt class='label'>Built with</dt>
+										<dd>{project.data.stack}</dd>
+									</div>
+								</dl>
+								<p class='links'>
+									{project.data.url && (
+										<a class='quiet-link' href={project.data.url}>
+											{project.data.status === 'internal' ? 'Open tool' : host(project.data.url)}{' '}
+											<span class='arrow'>↗</span>
+										</a>
+									)}
+									{project.data.repo && (
+										<a class='quiet-link' href={project.data.repo}>
+											Source <span class='arrow'>↗</span>
+										</a>
+									)}
+								</p>
+								<button type='button' class='flip-back quiet-link'>
+									<span class='arrow'>←</span> Flip back
+								</button>
+							</div>
+						</div>
+					</div>
 				</li>
 			))
 		}
@@ -94,19 +164,36 @@ const status = { live: 'Live', 'in progress': 'In progress', internal: 'Internal
 				});
 			});
 
+			// Flip a card over. Only the side facing you can be tabbed into.
+			list.querySelectorAll<HTMLElement>('.card').forEach((card) => {
+				const front = card.querySelector<HTMLButtonElement>('.front')!;
+				const back = card.querySelector<HTMLElement>('.back')!;
+				const flip = (flipped: boolean) => {
+					card.classList.toggle('is-flipped', flipped);
+					front.inert = flipped;
+					back.inert = !flipped;
+					(flipped ? back.querySelector<HTMLElement>('a, button') : front)?.focus({ preventScroll: true });
+				};
+				front.addEventListener('click', () => flip(true));
+				card.querySelector('.flip-back')!.addEventListener('click', () => flip(false));
+				card.addEventListener('keydown', (event) => {
+					if (event.key === 'Escape' && card.classList.contains('is-flipped')) flip(false);
+				});
+			});
+
 			// A little tilt toward the pointer, like turning a card in your hand.
 			if (matchMedia('(hover: hover) and (prefers-reduced-motion: no-preference)').matches) {
-				list.querySelectorAll<HTMLElement>('.face').forEach((face) => {
-					face.addEventListener('pointermove', (event) => {
-						const box = face.getBoundingClientRect();
+				list.querySelectorAll<HTMLElement>('.tilt').forEach((tilt) => {
+					tilt.addEventListener('pointermove', (event) => {
+						const box = tilt.getBoundingClientRect();
 						const x = (event.clientX - box.left) / box.width - 0.5;
 						const y = (event.clientY - box.top) / box.height - 0.5;
-						face.style.setProperty('--ry', `${x * 7}deg`);
-						face.style.setProperty('--rx', `${y * -7}deg`);
+						tilt.style.setProperty('--ry', `${x * 7}deg`);
+						tilt.style.setProperty('--rx', `${y * -7}deg`);
 					});
-					face.addEventListener('pointerleave', () => {
-						face.style.setProperty('--ry', '0deg');
-						face.style.setProperty('--rx', '0deg');
+					tilt.addEventListener('pointerleave', () => {
+						tilt.style.setProperty('--ry', '0deg');
+						tilt.style.setProperty('--rx', '0deg');
 					});
 				});
 			}
@@ -164,29 +251,51 @@ const status = { live: 'Live', 'in progress': 'In progress', internal: 'Internal
 	.card {
 		flex: 0 0 min(300px, 78vw);
 		margin: 0;
-		perspective: 900px;
+		perspective: 1000px;
 		scroll-snap-align: start;
+	}
+	.tilt {
+		height: 100%;
+		transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+		transform-style: preserve-3d;
+		transition: transform 500ms var(--ease-out);
+	}
+	.inner {
+		display: grid;
+		height: 100%;
+		transform-style: preserve-3d;
+		transition: transform 700ms var(--ease-out);
+	}
+	.card.is-flipped .inner {
+		transform: rotateY(180deg);
 	}
 	.face {
 		display: flex;
+		grid-area: 1 / 1;
 		flex-direction: column;
 		gap: 0.75rem;
+		backface-visibility: hidden;
 		border: 1px solid var(--line);
 		border-radius: 14px;
 		background: var(--surface);
 		padding: 10px 10px 14px;
-		height: 100%;
 		color: var(--ink);
-		text-decoration: none;
-		transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+		font: inherit;
+		text-align: left;
 		transition:
-			transform 500ms var(--ease-out),
 			box-shadow 400ms var(--ease-out),
 			border-color 300ms var(--ease-out);
 	}
-	.face:hover {
+	.front {
+		cursor: pointer;
+	}
+	.tilt:hover .face {
 		border-color: var(--line-strong);
 		box-shadow: var(--shadow);
+	}
+	.back {
+		transform: rotateY(180deg);
+		padding: 18px 16px 16px;
 	}
 	.photo {
 		display: block;
@@ -217,6 +326,8 @@ const status = { live: 'Live', 'in progress': 'In progress', internal: 'Internal
 	}
 	.plate {
 		display: grid;
+		flex: 1;
+		align-content: start;
 		gap: 0.2rem;
 		padding-inline: 4px;
 	}
@@ -225,17 +336,6 @@ const status = { live: 'Live', 'in progress': 'In progress', internal: 'Internal
 		font-size: 1.125rem;
 		line-height: 1.2;
 		letter-spacing: -0.015em;
-	}
-	.set {
-		color: var(--ink-3);
-		text-align: right;
-	}
-	.summary {
-		flex: 1;
-		padding-inline: 4px;
-		color: var(--ink-2);
-		font-size: var(--fs-sm);
-		line-height: 1.5;
 	}
 	.stats {
 		display: grid;
@@ -248,6 +348,11 @@ const status = { live: 'Live', 'in progress': 'In progress', internal: 'Internal
 		font-size: var(--fs-sm);
 		font-variant-numeric: tabular-nums;
 	}
+	.set {
+		color: var(--ink-3);
+		text-align: right;
+		font-variant-numeric: tabular-nums;
+	}
 	.label {
 		display: block;
 		color: var(--ink-3);
@@ -255,5 +360,95 @@ const status = { live: 'Live', 'in progress': 'In progress', internal: 'Internal
 		font-size: 0.6875rem;
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
+	}
+	.flip-hint {
+		display: inline-flex;
+		position: absolute;
+		top: 18px;
+		right: 18px;
+		align-items: center;
+		gap: 0.3rem;
+		translate: 0 -3px;
+		border-radius: 999px;
+		background: var(--bg);
+		padding: 0.15rem 0.55rem;
+		color: var(--ink-2);
+		font-weight: 600;
+		font-size: var(--fs-xs);
+		box-shadow: 0 1px 2px oklch(0% 0 0 / 0.15);
+		opacity: 0;
+		transition:
+			opacity 250ms var(--ease-out),
+			translate 350ms var(--ease-out);
+	}
+	.front {
+		position: relative;
+	}
+	.front:hover .flip-hint,
+	.front:focus-visible .flip-hint {
+		translate: 0 0;
+		opacity: 1;
+	}
+	@media (hover: none) {
+		.flip-hint {
+			translate: 0 0;
+			opacity: 1;
+		}
+	}
+
+	/* Back of the card */
+	.back-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 0.75rem;
+		border-bottom: 4px solid var(--accent);
+		padding-bottom: 0.6rem;
+	}
+	.back .set {
+		font-weight: 600;
+		font-size: var(--fs-xs);
+	}
+	.summary {
+		flex: 1;
+		margin: 0;
+		color: var(--ink-2);
+		font-size: var(--fs-sm);
+		line-height: 1.55;
+	}
+	.back-stats {
+		display: grid;
+		gap: 0.4rem;
+		margin: 0;
+		font-weight: 600;
+		font-size: var(--fs-sm);
+	}
+	.back-stats div {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		border-bottom: 1px dashed var(--line);
+		padding-bottom: 0.35rem;
+	}
+	.back-stats dd {
+		margin: 0;
+		text-align: right;
+	}
+	.links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem 1.1rem;
+		margin: 0;
+	}
+	.flip-back {
+		align-self: flex-start;
+		cursor: pointer;
+		border: 0;
+		background: none;
+		padding: 0;
+		font-family: inherit;
+	}
+	.flip-back:hover .arrow {
+		translate: -3px 0;
 	}
 </style>
