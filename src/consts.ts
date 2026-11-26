@@ -2,7 +2,7 @@
 
 export const SITE_TITLE = '<ethrmor />';
 export const SITE_DESCRIPTION =
-	'Ethan Morris is a web developer, dad of two, and a winger who picked up hockey at 36.';
+	'Ethan Morris is a director of development, dad of two, and a winger who picked up hockey at 36.';
 
 // The "Now" line on the home page. Update it whenever it stops being true.
 export const NOW = {
