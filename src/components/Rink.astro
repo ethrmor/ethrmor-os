@@ -1,68 +1,143 @@
 ---
-// A corner of a hockey rink seen from above: the boards, the goal line and
-// crease, and one faceoff circle. It stands in for the old
-// background grid, drawn faintly behind the top of every page.
+// A full NHL rink seen from above, drawn to scale (1 unit = 0.1 ft):
+// 200 x 85 ft, 28 ft corners, goal lines 11 ft from the boards, blue lines
+// 64 ft out from the goal lines, faceoff spots 20 ft out and 22 ft off center.
+// It stands in for the old background grid. A mask fades it out before it
+// reaches the text, so only the ends show beside the content column.
+
+const W = 2000;
+const H = 850;
+const MID = H / 2;
+
+const ends = [
+	{ goal: 110, dir: 1 },
+	{ goal: W - 110, dir: -1 },
+];
+
+const zoneSpots = ends.flatMap(({ goal, dir }) => [
+	{ x: goal + dir * 200, y: MID - 220 },
+	{ x: goal + dir * 200, y: MID + 220 },
+]);
+
+const neutralSpots = [800, 1200].flatMap((x) => [
+	{ x, y: MID - 220 },
+	{ x, y: MID + 220 },
+]);
+
+// Hash marks on the top and bottom of a faceoff circle, and the L marks around its spot.
+const hashes = (x: number, y: number) =>
+	[-1, 1]
+		.flatMap((side) => [
+			`M${x - 29} ${y + side * 150}v${side * 20}`,
+			`M${x + 29} ${y + side * 150}v${side * 20}`,
+			`M${x - 20} ${y + side * 9}h-40M${x - 20} ${y + side * 9}v${side * 30}`,
+			`M${x + 20} ${y + side * 9}h40M${x + 20} ${y + side * 9}v${side * 30}`,
+		])
+		.join('');
 ---
 
 <div class='rink' aria-hidden='true'>
-	<svg viewBox='0 0 800 600' preserveAspectRatio='xMaxYMin meet' fill='none'>
-		<!-- Boards, with the rounded corner -->
-		<path class='boards' d='M0 40H560a200 200 0 0 1 200 200V600'></path>
+	<svg viewBox={`0 0 ${W} ${H}`} fill='none'>
+		<!-- Boards -->
+		<rect class='boards' x='1' y='1' width={W - 2} height={H - 2} rx='280'></rect>
 
-		<!-- Goal line and crease -->
-		<path class='red' d='M672 76V600'></path>
-		<path class='crease' d='M672 325a40 40 0 0 0 0 80'></path>
-		<rect class='red' x='672' y='347' width='18' height='36' rx='4'></rect>
+		<!-- Center red line, blue lines -->
+		<rect class='red-fill' x={W / 2 - 5} y='1' width='10' height={H - 2}></rect>
+		<rect class='blue-fill' x='745' y='1' width='10' height={H - 2}></rect>
+		<rect class='blue-fill' x={W - 755} y='1' width='10' height={H - 2}></rect>
 
-		<!-- Faceoff circle with hash marks and dot -->
-		<circle class='red' cx='549' cy='230' r='92'></circle>
-		<path class='red' d='M529 138v-14M569 138v-14M529 322v14M569 322v14'></path>
-		<path class='red' d='M525 216h-16v-12M573 216h16v-12M525 244h-16v12M573 244h16v12'></path>
-		<circle class='dot' cx='549' cy='230' r='9'></circle>
+		<!-- Center circle and spot -->
+		<circle class='blue-line' cx={W / 2} cy={MID} r='150'></circle>
+		<circle class='blue-fill' cx={W / 2} cy={MID} r='6'></circle>
+
+		<!-- Referee's crease -->
+		<path class='red' d={`M${W / 2 - 100} ${H - 1}a100 100 0 0 1 200 0`}></path>
+
+		{
+			ends.map(({ goal, dir }) => (
+				<>
+					{/* Goal line, crease, net, and the trapezoid behind it */}
+					<path class='red' d={`M${goal} 40V${H - 40}`} />
+					<path class='crease' d={`M${goal} ${MID - 60}a60 60 0 0 ${dir === 1 ? 1 : 0} 0 120`} />
+					<rect class='red' x={dir === 1 ? goal - 40 : goal} y={MID - 30} width='40' height='60' rx='8' />
+					<path
+						class='red'
+						d={`M${goal} ${MID - 110}L${goal - dir * 109} ${MID - 140}M${goal} ${MID + 110}L${goal - dir * 109} ${MID + 140}`}
+					/>
+				</>
+			))
+		}
+
+		{
+			zoneSpots.map(({ x, y }) => (
+				<>
+					<circle class='red' cx={x} cy={y} r='150' />
+					<path class='red' d={hashes(x, y)} />
+					<circle class='red-fill' cx={x} cy={y} r='10' />
+				</>
+			))
+		}
+
+		{neutralSpots.map(({ x, y }) => <circle class='red-fill' cx={x} cy={y} r='10' />)}
 	</svg>
 </div>
 
 <style>
 	.rink {
+		--text-half: calc(var(--grid-content) / 2);
 		position: absolute;
-		top: 3.5rem;
+		top: 4.5rem;
 		right: 0;
 		left: 0;
 		z-index: -1;
-		overflow: hidden;
-		mask-image: linear-gradient(to bottom, #000 35%, transparent 95%), linear-gradient(to left, #000 40%, transparent);
+		mask-image:
+			linear-gradient(to bottom, #000 45%, transparent 100%),
+			linear-gradient(
+				to right,
+				#000 0,
+				#000 calc(50% - var(--text-half) - 10rem),
+				transparent calc(50% - var(--text-half) - 1.5rem),
+				transparent calc(50% + var(--text-half) + 1.5rem),
+				#000 calc(50% + var(--text-half) + 10rem)
+			);
 		mask-composite: intersect;
+		overflow: hidden;
 		pointer-events: none;
 	}
 	svg {
 		display: block;
-		margin-left: auto;
-		width: min(860px, 75vw);
+		margin-inline: auto;
+		width: max(100%, 1100px);
 		height: auto;
 	}
 	.boards {
 		stroke: var(--line-strong);
-		stroke-width: 2;
+		stroke-width: 3;
 	}
 	.red {
 		stroke: var(--rink-red);
-		stroke-width: 2;
+		stroke-width: 3;
+	}
+	.red-fill {
+		fill: var(--rink-red);
+	}
+	.blue-fill {
+		fill: var(--rink-blue);
+	}
+	.blue-line {
+		stroke: var(--rink-blue);
+		stroke-width: 3;
 	}
 	.crease {
 		fill: var(--rink-blue);
 		stroke: var(--rink-red);
-		stroke-width: 2;
+		stroke-width: 3;
 	}
-	.dot {
-		fill: var(--rink-red);
-	}
+
+	/* On phones the text spans the whole width, leaving no room beside it. */
 	@media (max-width: 720px) {
 		.rink {
-			opacity: 0.7;
-		}
-		svg {
-			margin-right: -35vw;
-			width: 110vw;
+			display: none;
 		}
 	}
 </style>
