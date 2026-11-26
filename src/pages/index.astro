@@ -76,7 +76,7 @@ const posts = (await getCollection('blog'))
 		{
 			posts.map((post) => (
 				<li class='post-link'>
-					<a href={`/blog/${post.slug}/`}>
+					<a href={`/blog/${post.id}/`}>
 						<FormattedDate date={post.data.pubDate} />
 						<h3>{post.data.title}</h3>
 					</a>
