@@ -409,27 +409,6 @@ time,
   animation-duration: 220ms;
 }
 
-/* Theme switch: the new theme sweeps across the page like a Zamboni pass. */
-:root.zamboni::view-transition-old(root) {
-  animation: none;
-}
-
-:root.zamboni::view-transition-new(root) {
-  mask-image: linear-gradient(to right, #000 44%, transparent 56%);
-  mask-size: 230% 100%;
-  mask-repeat: no-repeat;
-  animation: zamboni 950ms var(--ease-out-quart) both;
-}
-
-@keyframes zamboni {
-  from {
-    mask-position: 100% 0;
-  }
-  to {
-    mask-position: 0 0;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

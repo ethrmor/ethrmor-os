@@ -29,19 +29,11 @@
 		if (!button) return;
 		const root = document.documentElement;
 		const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-		const apply = () => {
-			root.dataset.theme = next;
-			try {
-				localStorage.setItem('theme', next);
-			} catch {}
-			sync();
-		};
-
-		// Resurface the ice: the new theme sweeps across like a Zamboni pass.
-		const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-		if (!document.startViewTransition || reduce) return apply();
-		root.classList.add('zamboni');
-		document.startViewTransition(apply).finished.finally(() => root.classList.remove('zamboni'));
+		root.dataset.theme = next;
+		try {
+			localStorage.setItem('theme', next);
+		} catch {}
+		sync();
 	});
 
 	document.addEventListener('astro:page-load', sync);

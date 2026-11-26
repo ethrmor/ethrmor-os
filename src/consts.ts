@@ -18,18 +18,11 @@ export const PLAYER = {
 	shoots: 'Right',
 	started: 2026,
 	favorite: 'Chicago Blackhawks',
-	// This season's numbers. Fill these in and the stat line appears on the About page:
-	// season: { label: '2026–27', gp: 12, g: 3, a: 5 },
-	season: null as null | { label: string; gp: number; g: number; a: number },
+	// This season's numbers, shown on the About page. Points are added up for you.
+	// Set to null to hide the stat line.
+	season: { label: 'Current', gp: 5, g: 0, a: 3 } as null | { label: string; gp: number; g: number; a: number },
 };
 
-// Next game, shown under the "Now" line on the home page. It hides itself once the
-// game has started, so it never looks stale. Example:
-// { date: '2026-12-03T21:15:00-06:00', opponent: 'Ice Dogs', rink: 'Owens Center' }
-export const NEXT_GAME = null as null | { date: string; opponent: string; rink?: string };
-
-// Time zone used to show the game time.
-export const HOME_TIME_ZONE = 'America/Chicago';
 
 export const SOCIAL = {
 	github: 'https://github.com/ethrmor',
