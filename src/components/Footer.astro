@@ -19,6 +19,13 @@ const connect = [
 
 <footer class='layout-grid'>
 	<div class='inner'>
+		<div class='about'>
+			<p class='colophon'>
+				Set in Manrope. Built with <a href='https://astro.build'>Astro</a> and hosted on Cloudflare.{' '}
+				<a href='https://github.com/ethrmor/ethrmor-os'>View source</a>.
+			</p>
+			<p>&copy; {year} Ethan Morris</p>
+		</div>
 		<nav aria-labelledby='footer-sitemap'>
 			<h2 id='footer-sitemap'>Sitemap</h2>
 			<ul>
@@ -47,20 +54,13 @@ const connect = [
 				}
 			</ul>
 		</nav>
-		<div class='about'>
-			<p class='colophon'>
-				Set in Manrope. Built with <a href='https://astro.build'>Astro</a> and hosted on Cloudflare.{' '}
-				<a href='https://github.com/ethrmor/ethrmor-os'>View source</a>.
-			</p>
-			<p>&copy; {year} Ethan Morris</p>
-		</div>
 	</div>
 </footer>
 
 <style>
 	.inner {
 		display: grid;
-		grid-template-columns: auto auto 1fr;
+		grid-template-columns: 1fr auto auto;
 		align-items: start;
 		gap: 2rem clamp(2rem, 6vw, 4.5rem);
 		border-top: 1px solid var(--line);
@@ -97,9 +97,7 @@ const connect = [
 		font-variant-ligatures: none;
 	}
 	.about {
-		justify-self: end;
 		max-width: 30ch;
-		text-align: right;
 	}
 	.about p {
 		margin: 0 0 0.6rem;
@@ -110,8 +108,7 @@ const connect = [
 		}
 		.about {
 			grid-column: 1 / -1;
-			justify-self: start;
-			text-align: left;
+			grid-row: 2;
 		}
 	}
 </style>
