@@ -18,5 +18,8 @@
     "astro": "^7.4.13",
     "prettier-plugin-css-order": "^2.2.0",
     "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=22.23.4"
   }
 }
