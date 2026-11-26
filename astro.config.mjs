@@ -6,5 +6,11 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://ethrmor.com',
   integrations: [mdx(), sitemap()],
-  output: "static"
+  output: 'static',
+  markdown: {
+    shikiConfig: {
+      themes: { light: 'github-light', dark: 'github-dark' },
+      defaultColor: false,
+    },
+  },
 });

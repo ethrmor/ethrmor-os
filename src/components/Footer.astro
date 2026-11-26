@@ -1,54 +1,62 @@
 ---
-const today = new Date();
+import { SOCIAL } from '../consts';
+
+const year = new Date().getFullYear();
 ---
 
 <footer class='layout-grid'>
-	<div class='content'>
-		<div class='sitemap'>
-			<span><strong>Sitemap</strong></span>
-			<ul>
-				<li><a href='/about'>/about</a></li>
-				<li><a href='/blog'>/blog</a></li>
-				<li><a href='/uses'>/uses</a></li>
-				<li><a href='/resume'>/resume</a></li>
-				<li><a href='/notes'>/notes</a></li>
-			</ul>
-		</div>
-		<div class='connect'>
-			<span><strong>Connect</strong></span>
-			<ul>
-				<li><a href='/contact'>Email</a></li>
-				<li><a href='https://github.com/ethrmor'>Github</a></li>
-				<li><a href='https://linkedin.com/in/ethanmorris1'>LinkedIn</a></li>
-				<li><a href='https://twitter.com/ethrmor'>Twitter</a></li>
-			</ul>
-		</div>
-		<p>&copy; {today.getFullYear()} Ethan Morris. All rights reserved.</p>
+	<div class='inner'>
+		<p class='colophon'>
+			Set in Manrope. Built with <a href='https://astro.build'>Astro</a> and hosted on Cloudflare.{' '}
+			<a href='https://github.com/ethrmor/ethrmor-os'>View source</a>.
+		</p>
+		<ul class='elsewhere'>
+			<li><a href={SOCIAL.github} rel='me'>GitHub</a></li>
+			<li><a href={SOCIAL.linkedin} rel='me'>LinkedIn</a></li>
+			<li><a href={SOCIAL.x} rel='me'>X</a></li>
+			<li><a href='/rss.xml'>RSS</a></li>
+		</ul>
+		<p class='copyright'>&copy; {year} Ethan Morris</p>
 	</div>
 </footer>
 
 <style>
-	.content {
+	.inner {
+		color: var(--ink-3);
+		font-size: var(--fs-sm);
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: start;
+		gap: 0.75rem 2rem;
+		border-top: 1px solid var(--line);
+		padding-block: 2rem 3.5rem;
+	}
+	p {
+		margin: 0;
+		max-width: 38ch;
+	}
+	.elsewhere {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: space-between;
-		align-items: start;
-		gap: 1em;
-		border-block-start: 1px solid #f0f0f0;
-		padding-block: 1em 4rem;
-		font-size: var(--fs-sm);
-	}
-	ul {
-		display: flex;
-		flex-direction: column;
+		gap: 0.25rem 1.1rem;
 		margin: 0;
 		padding: 0;
 		list-style: none;
 	}
+	.elsewhere li {
+		margin: 0;
+	}
 	a {
-		color: rgb(var(--gray));
+		color: var(--ink-2);
+		text-decoration-color: transparent;
 	}
 	a:hover {
-		color: var(--accent);
+		color: var(--ink);
+		text-decoration-color: var(--accent);
+	}
+	@media (max-width: 560px) {
+		.inner {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>

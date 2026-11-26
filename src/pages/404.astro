@@ -1,8 +1,63 @@
 ---
-import BaseLayout from '@layouts/BaseLayout.astro'
+import PostList from '@components/PostList.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getPosts } from '../lib/posts';
+
+const posts = (await getPosts()).slice(0, 3);
 ---
 
-<BaseLayout title='404' description='You have reach an error.'>
-	<p>404</p>
-	<p>Page not found.</p>
+<BaseLayout title='Page not found' description='This page does not exist.'>
+	<div class='lost'>
+		<p class='code' aria-hidden='true'>
+			<span style='--i: 0'>4</span><span style='--i: 1'>0</span><span style='--i: 2'>4</span>
+		</p>
+		<h1>This page wandered off.</h1>
+		<p>
+			It moved, or it never existed. Head back <a href='/'>home</a>, or try something I've written recently:
+		</p>
+	</div>
+	<PostList posts={posts} />
 </BaseLayout>
+
+<style>
+	.lost {
+		margin-bottom: 2.5rem;
+	}
+	.lost p {
+		color: var(--ink-2);
+	}
+	.code {
+		display: flex;
+		margin: 0 0 1rem;
+		color: var(--ink-3);
+		font-weight: 800;
+		font-size: clamp(4rem, 3rem + 6vw, 6rem);
+		line-height: 1;
+		letter-spacing: -0.04em;
+		user-select: none;
+	}
+	.code span {
+		display: inline-block;
+		transition:
+			translate 500ms var(--ease-out),
+			rotate 500ms var(--ease-out),
+			color 300ms var(--ease-out);
+		transition-delay: calc(var(--i) * 40ms);
+	}
+	/* Nudge the digits when you go looking for the missing page. */
+	.code:hover span {
+		color: var(--accent);
+	}
+	.code:hover span:nth-child(1) {
+		translate: -4px -6px;
+		rotate: -8deg;
+	}
+	.code:hover span:nth-child(2) {
+		translate: 0 6px;
+		rotate: 6deg;
+	}
+	.code:hover span:nth-child(3) {
+		translate: 5px -3px;
+		rotate: 10deg;
+	}
+</style>

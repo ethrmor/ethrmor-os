@@ -1,123 +1,99 @@
 ---
-import { SITE_TITLE } from '../consts';
+import { SOCIAL } from '../consts';
 import HeaderLink from './HeaderLink.astro';
+import ThemeToggle from './ThemeToggle.astro';
 ---
 
+<header class='site-header layout-grid'>
+	<nav class='bleed' aria-label='Main'>
+		<a href='/' class='wordmark' aria-label='Ethan Morris, home'>
+			<span class='bracket' aria-hidden='true'>&lt;</span>ethrmor<span class='bracket' aria-hidden='true'
+				>&nbsp;/&gt;</span
+			>
+		</a>
+		<div class='links'>
+			<HeaderLink href='/blog'>Writing</HeaderLink>
+			<HeaderLink href='/about'>About</HeaderLink>
+			<a href={SOCIAL.github} class='icon-link' rel='me'>
+				<span class='sr-only'>GitHub</span>
+				<svg viewBox='0 0 16 16' aria-hidden='true' width='18' height='18'
+					><path
+						fill='currentColor'
+						d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z'
+					></path></svg
+				>
+			</a>
+			<ThemeToggle />
+		</div>
+	</nav>
+</header>
+
 <script>
-	// Look up the header on every call: ClientRouter swaps it out on navigation.
+	// Look up the header on every call: ClientRouter swaps it on navigation.
 	function updateHeader() {
-		document.querySelector('header')?.classList.toggle('is_scrolled', window.scrollY > 0);
+		document.querySelector('.site-header')?.classList.toggle('is-scrolled', window.scrollY > 8);
 	}
 
 	window.addEventListener('scroll', updateHeader, { passive: true });
 	document.addEventListener('astro:page-load', updateHeader);
 </script>
 
-<header class='layout-grid'>
-	<nav class='bleed'>
-		<h2><a href='/'>{SITE_TITLE}</a></h2>
-		<div class='links'>
-			<div class='internal-links'>
-				<HeaderLink href='/'>Home</HeaderLink>
-				<HeaderLink href='/blog'>Blog</HeaderLink>
-				<HeaderLink href='/about'>About</HeaderLink>
-			</div>
-			<div class='social-links'>
-				<a href='https://twitter.com/ethrmor' target='_blank'>
-					<span class='sr-only'>Follow me on Twitter</span>
-
-					<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24'>
-						<path
-							fill='currentColor'
-							d='M18.205 2.25h3.308l-7.227 8.26l8.502 11.24H16.13l-5.214-6.817L4.95 21.75H1.64l7.73-8.835L1.215 2.25H8.04l4.713 6.231zm-1.161 17.52h1.833L7.045 4.126H5.078z'
-						></path>
-					</svg>
-				</a>
-				<a href='https://github.com/ethrmor' target='_blank'>
-					<span class='sr-only'>Go to my GitHub repo</span>
-					<svg viewBox='0 0 16 16' aria-hidden='true' width='20' height='20'
-						><path
-							fill='currentColor'
-							d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z'
-						></path></svg
-					>
-				</a>
-			</div>
-		</div>
-	</nav>
-</header>
 <style>
-	header {
+	.site-header {
 		position: sticky;
 		top: 0;
-		z-index: 50;
-		backdrop-filter: blur(10px);
-		margin: 0;
-		border-block-end: 1px solid #f0f0f0;
-		background: white;
-		background-color: rgba(255, 255, 255, 0.6); /* Assuming bg-background is white with 95% opacity */
-		width: 100%;
-		min-height: 3rem;
+		z-index: var(--z-header);
+		border-bottom: 1px solid transparent;
+		transition:
+			background-color 300ms var(--ease-out),
+			border-color 300ms var(--ease-out),
+			backdrop-filter 300ms var(--ease-out);
 	}
-	.is_scrolled {
-		box-shadow: 0 2px 8px oklch(var(--black) / 5%);
-	}
-	h2 {
-		margin: 0;
-		font-size: var(--fs-md);
-	}
-	h2 a {
-		color: inherit;
-		text-decoration: none;
+	.site-header.is-scrolled {
+		backdrop-filter: blur(14px) saturate(1.4);
+		border-bottom-color: var(--line);
+		background-color: color-mix(in oklch, var(--bg) 72%, transparent);
 	}
 	nav {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		gap: 1rem;
+		min-height: 4rem;
+	}
+	.wordmark {
+		color: var(--ink);
+		font-weight: 700;
+		font-size: 1.0625rem;
+		letter-spacing: -0.015em;
+		text-decoration: none;
+	}
+	.bracket {
+		color: var(--ink-3);
+		font-weight: 500;
+		transition: color 250ms var(--ease-out);
+	}
+	.wordmark:hover .bracket {
+		color: var(--accent);
 	}
 	.links {
 		display: flex;
 		align-items: center;
+		gap: 0.25rem;
 	}
-	.links a {
-		margin-block: 0.5rem;
-		border-radius: 0.5rem;
-		padding: 0.25rem 0.5rem;
-		color: oklch(var(--black));
-		line-height: 1;
-		text-decoration: none;
+	.icon-link {
+		display: grid;
+		place-items: center;
+		border-radius: 8px;
+		width: 2.25rem;
+		height: 2.25rem;
+		color: var(--ink-2);
+		transition:
+			color 200ms var(--ease-out),
+			background-color 200ms var(--ease-out);
 	}
-	.links:has(a:hover) a:not(:hover) {
-		color: oklch(var(--gray-25));
-	}
-	.links a:hover {
-		color: var(--black);
-	}
-	.links a.active {
-		color: oklch(var(--black));
-		text-decoration: underline;
-		text-decoration-color: oklch(var(--accent));
-		text-decoration-thickness: 0.2em;
-		text-underline-offset: 0.5em;
-	}
-	.internal-links {
-		display: flex;
-		/* gap: 1em; */
-	}
-	.social-links,
-	.social-links a {
-		display: flex;
-	}
-	.social-links a {
-		border-radius: 0.5em;
-		padding: 0.5em;
-	}
-	.social-links a:hover {
-		color: oklch(var(--accent));
-	}
-	@media (max-width: 720px) {
-		.social-links {
-			display: none;
-		}
+	.icon-link:hover {
+		background-color: var(--surface-2);
+		color: var(--ink);
 	}
 </style>

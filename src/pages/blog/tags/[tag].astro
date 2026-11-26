@@ -1,0 +1,47 @@
+---
+import PostList from '@components/PostList.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getPosts, tagSlug, type Post } from '../../../lib/posts';
+
+export async function getStaticPaths() {
+	const posts = await getPosts();
+	const tags = new Map<string, { name: string; posts: Post[] }>();
+	for (const post of posts) {
+		for (const name of post.data.tags ?? []) {
+			const slug = tagSlug(name);
+			if (!tags.has(slug)) tags.set(slug, { name, posts: [] });
+			tags.get(slug)!.posts.push(post);
+		}
+	}
+	return [...tags].map(([tag, { name, posts }]) => ({ params: { tag }, props: { name, posts } }));
+}
+
+interface Props {
+	name: string;
+	posts: Post[];
+}
+
+const { name, posts } = Astro.props;
+---
+
+<BaseLayout title={`Posts tagged #${name}`} description={`Everything I've written about ${name}.`}>
+	<header class='page-head'>
+		<a class='quiet-link back' href='/blog'><span class='arrow'>←</span> All writing</a>
+		<h1>#{name}</h1>
+		<p class='meta'>{posts.length} {posts.length === 1 ? 'post' : 'posts'}</p>
+	</header>
+	<PostList posts={posts} />
+</BaseLayout>
+
+<style>
+	.page-head {
+		margin-bottom: 2rem;
+	}
+	.back {
+		display: inline-block;
+		margin-bottom: 1.25rem;
+	}
+	.back:hover .arrow {
+		translate: -3px 0;
+	}
+</style>

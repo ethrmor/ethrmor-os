@@ -1,65 +1,109 @@
 ---
-import Tag from '@components/Tag.astro';
+import FormattedDate from '@components/FormattedDate.astro';
 import type { CollectionEntry } from 'astro:content';
-import FormattedDate from '../components/FormattedDate.astro';
+import { tagSlug } from '../lib/posts';
 import BaseLayout from './BaseLayout.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & { id: string; minutes: number };
 
-const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.props;
+const { id, title, description, pubDate, updatedDate, tags, minutes } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description}>
 	<article class='full prose'>
-		<div class='title'>
-			<h1>{title}</h1>
-			<div class='date'>
+		<header class='post-head'>
+			<a class='quiet-link back' href='/blog'><span class='arrow'>←</span> Writing</a>
+			<h1 transition:name={`post-title-${id}`}>{title}</h1>
+			<p class='meta'>
 				<FormattedDate date={pubDate} />
+				<span aria-hidden='true'>·</span>
+				<span>{minutes} min read</span>
 				{
 					updatedDate && (
-						<div class='last-updated-on'>
-							Last updated on <FormattedDate date={updatedDate} />
-						</div>
+						<>
+							<span aria-hidden='true'>·</span>
+							<span>
+								Updated <FormattedDate date={updatedDate} />
+							</span>
+						</>
 					)
 				}
-				<span>·</span>
-				<span class='time-to-read'>8 min read</span>
-			</div>
-			<div>{tags && tags.map((tag) => <Tag href={`/blog/tags/${tag}`} name={tag} />)}</div>
-		</div>
+			</p>
+			{
+				tags && tags.length > 0 && (
+					<p class='tags'>
+						{tags.map((tag) => (
+							<a href={`/blog/tags/${tagSlug(tag)}/`}>#{tag}</a>
+						))}
+					</p>
+				)
+			}
+		</header>
 		<slot />
+		<footer class='post-foot'>
+			<a class='quiet-link' href='/blog'><span class='arrow'>←</span> More writing</a>
+		</footer>
 	</article>
 </BaseLayout>
 
 <style>
-	.hero-image {
-		width: 100%;
+	.post-head {
+		margin-bottom: 2.75rem;
+		border-bottom: 1px solid var(--line);
+		padding-bottom: 1.75rem;
 	}
-	.hero-image img {
-		display: block;
-		margin: 0 auto 2rem;
-		box-shadow: var(--box-shadow);
-		border-radius: 12px;
-	}
-	.prose {
-		color: var(--black);
-	}
-	.title h1 {
-		margin: 0 0 0.5em 0;
-	}
-	.date {
-		margin-bottom: 0.5em;
-		color: rgb(var(--gray));
-	}
-	.last-updated-on {
-		font-style: italic;
-	}
-	.time-to-read {
+	.back {
 		display: inline-block;
-		font-size: var(--fs-sm);
+		margin-bottom: 1.5rem;
+	}
+	.quiet-link:hover .arrow {
+		translate: -3px 0;
+	}
+	h1 {
+		margin-bottom: 0.6em;
+		font-size: var(--fs-xl);
+	}
+	.meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.2rem 0.5rem;
+		margin-bottom: 0.9rem;
 	}
 	.tags {
 		display: flex;
 		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin: 0;
+	}
+	.tags a {
+		border-radius: 999px;
+		background-color: var(--surface-2);
+		padding: 0.15rem 0.65rem;
+		color: var(--ink-2);
+		font-weight: 550;
+		font-size: var(--fs-xs);
+		text-decoration: none;
+	}
+	.tags a:hover {
+		background-color: var(--accent-wash);
+		color: var(--accent-ink);
+	}
+	.prose :global(h2) {
+		margin-top: 2.5em;
+		font-size: var(--fs-lg);
+	}
+	.prose :global(h3) {
+		margin-top: 2em;
+	}
+	.prose :global(:is(p, li)) {
+		color: color-mix(in oklch, var(--ink) 88%, var(--ink-2));
+	}
+	.prose :global(pre) {
+		grid-column: popout;
+	}
+	.post-foot {
+		margin-top: 3.5rem;
+		border-top: 1px solid var(--line);
+		padding-top: 1.5rem;
 	}
 </style>
