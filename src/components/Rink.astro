@@ -10,6 +10,17 @@ const W = 2000;
 const H = 850;
 const MID = H / 2;
 
+// Boards: a rounded rectangle inset by 1 unit so its stroke isn't clipped.
+const INSET = 1;
+const R = 280;
+
+// Where a line at x meets the rounded corner, so lines end exactly on the boards.
+const boardY = (x: number) => {
+	const cx = x < W / 2 ? INSET + R : W - INSET - R;
+	const dx = Math.abs(x - cx);
+	return dx >= R ? INSET + R : INSET + R - Math.sqrt(R * R - dx * dx);
+};
+
 const ends = [
 	{ goal: 110, dir: 1 },
 	{ goal: W - 110, dir: -1 },
@@ -40,7 +51,7 @@ const hashes = (x: number, y: number) =>
 <div class='rink' aria-hidden='true'>
 	<svg viewBox={`0 0 ${W} ${H}`} fill='none'>
 		<!-- Boards -->
-		<rect class='boards' x='1' y='1' width={W - 2} height={H - 2} rx='280'></rect>
+		<rect class='boards' x={INSET} y={INSET} width={W - INSET * 2} height={H - INSET * 2} rx={R}></rect>
 
 		<!-- Center red line, blue lines -->
 		<rect class='red-fill' x={W / 2 - 5} y='1' width='10' height={H - 2}></rect>
@@ -58,7 +69,7 @@ const hashes = (x: number, y: number) =>
 			ends.map(({ goal, dir }) => (
 				<>
 					{/* Goal line, crease, net, and the trapezoid behind it */}
-					<path class='red' d={`M${goal} 40V${H - 40}`} />
+					<path class='red' d={`M${goal} ${boardY(goal)}V${H - boardY(goal)}`} />
 					<path class='crease' d={`M${goal} ${MID - 60}a60 60 0 0 ${dir === 1 ? 1 : 0} 0 120`} />
 					<rect class='red' x={dir === 1 ? goal - 40 : goal} y={MID - 30} width='40' height='60' rx='8' />
 					<path
