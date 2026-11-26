@@ -16,8 +16,10 @@
     "@astrojs/rss": "^4.0.5",
     "@astrojs/sitemap": "^3.1.1",
     "@fontsource-variable/manrope": "^5.0.19",
+    "@tailwindcss/vite": "^4.2.1",
     "astro": "^4.4.15",
     "prettier-plugin-css-order": "^2.0.1",
+    "tailwindcss": "^4.2.1",
     "typescript": "^5.3.3"
   }
 }
