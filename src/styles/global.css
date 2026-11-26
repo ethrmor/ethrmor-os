@@ -11,7 +11,7 @@
   --surface: oklch(96.4% 0.006 245);
   --surface-2: oklch(93.6% 0.008 245);
   --ink: oklch(17% 0.006 260);
-  --ink-2: oklch(40% 0.008 255);
+  --ink-2: oklch(37% 0.008 255);
   --ink-3: oklch(51% 0.008 255);
   --line: oklch(90% 0.008 245);
   --line-strong: oklch(82% 0.01 245);
@@ -91,6 +91,7 @@ body {
   color: var(--ink);
   font-size: var(--fs-base);
   line-height: 1.68;
+  font-weight: 450;
   font-family: var(--font);
   font-feature-settings: 'ss01', 'cv11';
   overflow-wrap: break-word;

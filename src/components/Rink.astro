@@ -11,21 +11,21 @@
 
 		<!-- Goal line and crease -->
 		<path class='red' d='M672 76V600'></path>
-		<path class='crease' d='M672 266a52 52 0 0 0 0 104'></path>
-		<rect class='red' x='672' y='296' width='20' height='44' rx='4'></rect>
+		<path class='crease' d='M672 325a40 40 0 0 0 0 80'></path>
+		<rect class='red' x='672' y='347' width='18' height='36' rx='4'></rect>
 
 		<!-- Faceoff circle with hash marks and dot -->
-		<circle class='red' cx='430' cy='318' r='92'></circle>
-		<path class='red' d='M410 226v-14M450 226v-14M410 410v14M450 410v14'></path>
-		<path class='red' d='M406 304h-16v-12M454 304h16v-12M406 332h-16v12M454 332h16v12'></path>
-		<circle class='dot' cx='430' cy='318' r='9'></circle>
+		<circle class='red' cx='549' cy='230' r='92'></circle>
+		<path class='red' d='M529 138v-14M569 138v-14M529 322v14M569 322v14'></path>
+		<path class='red' d='M525 216h-16v-12M573 216h16v-12M525 244h-16v12M573 244h16v12'></path>
+		<circle class='dot' cx='549' cy='230' r='9'></circle>
 	</svg>
 </div>
 
 <style>
 	.rink {
 		position: absolute;
-		top: 0;
+		top: 3.5rem;
 		right: 0;
 		left: 0;
 		z-index: -1;
@@ -37,7 +37,6 @@
 	svg {
 		display: block;
 		margin-left: auto;
-		translate: 60px 0;
 		width: min(860px, 75vw);
 		height: auto;
 	}
@@ -62,7 +61,6 @@
 			opacity: 0.7;
 		}
 		svg {
-			translate: 0 0;
 			margin-right: -35vw;
 			width: 110vw;
 		}

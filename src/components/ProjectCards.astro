@@ -41,14 +41,11 @@ const status = { live: 'Live', 'in progress': 'In progress', internal: 'Internal
 								sizes='320px'
 								loading={i < 2 ? 'eager' : 'lazy'}
 							/>
-							<span class='status' data-status={project.data.status}>
-								{status[project.data.status]}
-							</span>
 						</span>
 						<span class='plate'>
 							<span class='name'>{project.data.title}</span>
-							<span class='set'>
-								{String(i + 1).padStart(2, '0')}/{String(projects.length).padStart(2, '0')}
+							<span class='status' data-status={project.data.status}>
+								{status[project.data.status]}
 							</span>
 						</span>
 						<span class='summary'>{project.data.summary}</span>
@@ -60,6 +57,10 @@ const status = { live: 'Live', 'in progress': 'In progress', internal: 'Internal
 							<span>
 								<span class='label'>Built with</span>
 								{project.data.stack}
+							</span>
+							<span class='set'>
+								<span class='label'>Card</span>
+								{String(i + 1).padStart(2, '0')}
 							</span>
 						</span>
 					</a>
@@ -214,21 +215,9 @@ const status = { live: 'Live', 'in progress': 'In progress', internal: 'Internal
 	:global([data-theme='dark']) .photo :global(img) {
 		filter: brightness(0.86);
 	}
-	.photo .status {
-		position: absolute;
-		top: 8px;
-		left: 8px;
-		border-radius: 999px;
-		background: var(--bg);
-		padding: 0.15rem 0.55rem;
-		color: var(--ink-2);
-		box-shadow: 0 1px 2px oklch(0% 0 0 / 0.12);
-	}
 	.plate {
-		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-		gap: 0.5rem;
+		display: grid;
+		gap: 0.2rem;
 		padding-inline: 4px;
 	}
 	.name {
@@ -239,9 +228,7 @@ const status = { live: 'Live', 'in progress': 'In progress', internal: 'Internal
 	}
 	.set {
 		color: var(--ink-3);
-		font-weight: 600;
-		font-size: var(--fs-xs);
-		font-variant-numeric: tabular-nums;
+		text-align: right;
 	}
 	.summary {
 		flex: 1;
@@ -252,7 +239,7 @@ const status = { live: 'Live', 'in progress': 'In progress', internal: 'Internal
 	}
 	.stats {
 		display: grid;
-		grid-template-columns: auto 1fr;
+		grid-template-columns: auto 1fr auto;
 		gap: 1rem;
 		margin-inline: 4px;
 		border-top: 1px solid var(--line);

@@ -10,7 +10,7 @@ Primarily Ethan himself: a personal corner of the internet for writing, experime
 ## Who Ethan is (use this, don't invent)
 - Web developer at Central States Marketing since 2021; financial advisor 2013 to 2021.
 - Dad of two. Family is most of life outside work.
-- Started playing hockey in 2026 at age 36: right wing, shoots right, #91 for the Bombers. Chicago Blackhawks fan.
+- Started playing hockey in 2026 at age 36: winger (always say "winger", never "right wing"), shoots right, #91 for the Bombers. Chicago Blackhawks fan.
 - No longer plays fantasy football (the league site is a past project).
 - Likes: the `<ethrmor />` wordmark, the old background grid as an idea (but it felt dated), projects you can swipe through. Likes dark purple but finds it reads as AI.
 - Rejected: soft accent glow, generic "notebook", "teal block", and "workbench" portfolio layouts.

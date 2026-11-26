@@ -5,7 +5,7 @@ import { PLAYER } from '../consts';
 const stats = [
 	{ label: 'Team', value: PLAYER.team },
 	{ label: 'No.', value: PLAYER.number },
-	{ label: 'Pos', value: 'RW' },
+	{ label: 'Plays', value: 'Winger' },
 	{ label: 'Shoots', value: PLAYER.shoots },
 	{ label: 'Since', value: PLAYER.started },
 	{ label: 'Fan of', value: 'Blackhawks' },
@@ -27,7 +27,7 @@ const work = [
 ];
 ---
 
-<BaseLayout title='About' description='Ethan Morris: web developer, dad of two, right wing for the Bombers.'>
+<BaseLayout title='About' description='Ethan Morris: web developer, dad of two, winger for the Bombers.'>
 	<h1>About</h1>
 
 	<dl class='player' aria-label='Hockey stats'>
@@ -43,7 +43,7 @@ const work = [
 
 	<p class='lede'>
 		I'm a web developer and a dad of two. Most of my time outside work goes to my kids, and the rest lately goes to
-		hockey: I started playing in {PLAYER.started}, at 36, and skate right wing for the Bombers in number {PLAYER.number}.
+		hockey: I started playing in {PLAYER.started}, at 36. I'm a winger for the Bombers, number {PLAYER.number}.
 	</p>
 	<p>
 		My interest in the web started back in the days of dial-up. It took a detour through nearly ten years in finance
@@ -55,7 +55,7 @@ const work = [
 		<li>Shortened the path from design to production by smoothing out how designers and developers hand off work.</li>
 	</ul>
 
-	<blockquote class='popout'>
+	<blockquote>
 		<p>&ldquo;If you are not learning, you are not living.&rdquo;</p>
 		<footer>Kevin James Breaux</footer>
 	</blockquote>
