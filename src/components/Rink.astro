@@ -3,7 +3,8 @@
 // 200 x 85 ft, 28 ft corners, goal lines 11 ft from the boards, blue lines
 // 64 ft out from the goal lines, faceoff spots 20 ft out and 22 ft off center.
 // It stands in for the old background grid. A mask fades it out before it
-// reaches the text, so only the ends show beside the content column.
+// reaches the text, so only the right end shows beside the content column,
+// and fades out before the second section.
 
 const W = 2000;
 const H = 850;
@@ -91,12 +92,9 @@ const hashes = (x: number, y: number) =>
 		left: 0;
 		z-index: -1;
 		mask-image:
-			linear-gradient(to bottom, #000 45%, transparent 100%),
+			linear-gradient(to bottom, #000 25%, transparent 72%),
 			linear-gradient(
 				to right,
-				#000 0,
-				#000 calc(50% - var(--text-half) - 10rem),
-				transparent calc(50% - var(--text-half) - 1.5rem),
 				transparent calc(50% + var(--text-half) + 1.5rem),
 				#000 calc(50% + var(--text-half) + 10rem)
 			);
