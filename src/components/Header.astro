@@ -4,17 +4,13 @@ import HeaderLink from './HeaderLink.astro';
 ---
 
 <script>
-	document.addEventListener('DOMContentLoaded', function () {
-		const header = document.querySelector('header');
+	// Look up the header on every call: ClientRouter swaps it out on navigation.
+	function updateHeader() {
+		document.querySelector('header')?.classList.toggle('is_scrolled', window.scrollY > 0);
+	}
 
-		window.addEventListener('scroll', function () {
-			if (window.scrollY > 0) {
-				header?.classList.add('is_scrolled');
-			} else {
-				header?.classList.remove('is_scrolled');
-			}
-		});
-	});
+	window.addEventListener('scroll', updateHeader, { passive: true });
+	document.addEventListener('astro:page-load', updateHeader);
 </script>
 
 <header class='layout-grid'>
