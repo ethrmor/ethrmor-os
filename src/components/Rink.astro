@@ -125,14 +125,17 @@ const hashes = (x: number, y: number) =>
 				#000 calc(50% + var(--text-half) + 10rem)
 			);
 		mask-composite: intersect;
+		display: flex;
+		justify-content: flex-end;
 		overflow: hidden;
 		pointer-events: none;
 	}
 	svg {
 		display: block;
-		/* A little wider than the screen, so the end boards run just off the edge. */
-		width: max(calc(100% + 4rem), 1100px);
-		margin-inline: -2rem;
+		flex-shrink: 0;
+		/* Pulled in from the right edge, so the end boards sit fully on screen. */
+		margin-right: clamp(1rem, 2.5vw, 2.5rem);
+		width: max(calc(100% - 2 * clamp(1rem, 2.5vw, 2.5rem)), 1100px);
 		height: auto;
 	}
 	.boards {
